@@ -1,16 +1,18 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
+import React from 'react';
 
-export default async function Home() {
+const Unauthenticated = async () => {
   const supabase = createServerComponentClient({ cookies });
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) {
-    redirect('/unauthenticated');
+  if (session) {
+    redirect('/');
   }
-  return <div>home</div>;
-}
+  return <div>please sign in</div>;
+};
+
+export default Unauthenticated;
