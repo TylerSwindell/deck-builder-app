@@ -6,6 +6,11 @@ import LoginForm from '../components/loginForm';
 import Link from 'next/link';
 
 const Signin = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (session) redirect('/dashboard');
   return (
     <>
       {' '}

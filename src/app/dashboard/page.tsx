@@ -1,21 +1,17 @@
-'use client';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import Signout from '../components/signout';
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useRouter } from 'next/navigation';
-
-const Dashboard = () => {
-  const supabase = createClientComponentClient();
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.refresh();
-  };
-
+const Dashboard = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) redirect('/signin');
   return (
     <div>
-      {' '}
-      <button onClick={handleSignOut}>Sign out</button>
+      <Signout />{' '}
     </div>
   );
 };
