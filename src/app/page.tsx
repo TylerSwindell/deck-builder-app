@@ -10,7 +10,8 @@ export default async function Home() {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    redirect('/unauthenticated');
+    redirect('/signin');
+  } else {
+    redirect(`/dashboard`);
   }
-  return <div>home</div>;
 }
