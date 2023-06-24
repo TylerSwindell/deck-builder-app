@@ -3,7 +3,6 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import LoginForm from '../components/loginForm';
-import Link from 'next/link';
 
 const Signin = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -12,11 +11,9 @@ const Signin = async () => {
   } = await supabase.auth.getSession();
   if (session) redirect('/dashboard');
   return (
-    <>
-      {' '}
+    <div className="m-auto">
       <LoginForm />
-      <Link href="/signin/register">Register</Link>
-    </>
+    </div>
   );
 };
 

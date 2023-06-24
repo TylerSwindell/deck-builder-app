@@ -9,11 +9,7 @@ const Dashboard = async () => {
     data: { session },
   } = await supabase.auth.getSession();
   if (!session) redirect('/signin');
-  return (
-    <div>
-      <Signout />{' '}
-    </div>
-  );
+  return <div>Welcome!</div>;
 };
 
 export default Dashboard;

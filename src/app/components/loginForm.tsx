@@ -19,19 +19,30 @@ export default function LoginForm() {
   };
 
   return (
-    <>
-      <input
-        name="email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-      />
-      <input
-        type="password"
-        name="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <button onClick={handleSignIn}>Sign in</button>
-    </>
+    <div className="bg-gray-100 rounded-lg p-8 shadow-md">
+      <div className="flex flex-col space-y-4">
+        <input
+          className="px-4 py-2 border rounded-md"
+          name="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          placeholder="Email"
+        />
+        <input
+          className="px-4 py-2 border rounded-md"
+          type="password"
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          placeholder="Password"
+        />
+        <button
+          className="px-4 py-2 text-white bg-blue-500 rounded-md transition-colors hover:bg-blue-700"
+          onClick={handleSignIn}
+        >
+          Sign in
+        </button>
+      </div>
+    </div>
   );
 }

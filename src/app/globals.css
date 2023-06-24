@@ -2,3 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+.jaceNeonText {
+    color:#f2f1f1;
+    text-shadow:
+    0 0 7px #51b2c8,
+    0 0 10px #51b2c8,
+    0 0 21px #51b2c8,
+    0 0 42px #51b2c8,
+    0 0 82px #51b2c8;
+    transition: text-shadow 0.5s, color 0.5s;
+  }
+
+  .jaceNeonText:hover {
+    color:#fff;
+    text-shadow:
+        0 0 7px #84cfdb,
+        0 0 10px #84cfdb,
+        0 0 21px #84cfdb,
+        0 0 42px #84cfdb,
+        0 0 82px #84cfdb;
+  }
+  

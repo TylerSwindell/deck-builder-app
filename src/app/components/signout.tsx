@@ -14,7 +14,9 @@ export default function Signout() {
 
   return (
     <>
-      <button onClick={handleSignOut}>Sign out</button>
+      <button className="jaceNeonText" onClick={handleSignOut}>
+        Sign out
+      </button>
     </>
   );
 }
