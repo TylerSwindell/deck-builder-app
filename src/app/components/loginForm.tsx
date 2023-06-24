@@ -21,14 +21,29 @@ export default function LoginForm() {
   return (
     <div className="bg-gray-100 rounded-lg p-8 shadow-md">
       <div className="flex flex-col space-y-4">
+        <label
+          htmlFor="email"
+          className="text-sm font-medium text-gray-700"
+        >
+          Email
+        </label>
         <input
+          id="email"
           className="px-4 py-2 border rounded-md"
           name="email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           placeholder="Email"
         />
+
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-gray-700"
+        >
+          Password
+        </label>
         <input
+          id="password"
           className="px-4 py-2 border rounded-md"
           type="password"
           name="password"

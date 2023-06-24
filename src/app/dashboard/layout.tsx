@@ -22,7 +22,7 @@ export default function Layout({
           <div className="hidden lg:block">
             <ul className="flex space-x-4">
               <li>
-                <Signout />
+                <Signout variant="neon" />
               </li>
             </ul>
           </div>
@@ -48,10 +48,11 @@ export default function Layout({
           </div>
           {showMenu && (
             <div className="lg:hidden">
-              <ul className="bg-white border rounded-md shadow-lg absolute right-0 mt-2 py-2 w-48">
-                <li>
-                  <Signout />
+              <ul className="bg-white border rounded-md shadow-lg absolute right-0 mt-2  w-48 divide-y divide-blue-200">
+                <li className="pl-2 pt-2 pb-2">
+                  <Signout variant="blue" />
                 </li>
+                <li className="pl-2 pt-2 pb-2">Settings</li>
               </ul>
             </div>
           )}

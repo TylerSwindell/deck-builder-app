@@ -3,7 +3,11 @@
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 
-export default function Signout() {
+export default function Signout({
+  variant,
+}: {
+  variant: 'neon' | 'blue';
+}) {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -14,7 +18,12 @@ export default function Signout() {
 
   return (
     <>
-      <button className="jaceNeonText" onClick={handleSignOut}>
+      <button
+        className={
+          variant === 'neon' ? 'jaceNeonText' : 'text-sky-400'
+        }
+        onClick={handleSignOut}
+      >
         Sign out
       </button>
     </>
