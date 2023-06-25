@@ -61,7 +61,7 @@ export default function Layout({
                 <li className="pl-2 pt-2 pb-2">
                   <Link
                     className="jaceNeonText"
-                    href={'/dashboard/build'}
+                    href={'/dashboard/decks'}
                   >
                     Deck Builder
                   </Link>

@@ -13,14 +13,21 @@ const Dashboard = async () => {
   } = await supabase.auth.getSession();
   if (!session) redirect('/');
   const user = session?.user;
-  let { data: profile, error } = await supabase
+  let { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select(`username, avatar_url`)
     .eq('id', user?.id)
     .single();
 
-  let decks: Deck[] = [];
-  if (error) return <ErrorDisplay error={error} />;
+  let { data: decks, error: decksError } = await supabase
+    .from('decks')
+    .select(`*`)
+    .eq('user_id', user?.id);
+  console.log(user?.id);
+
+  console.log(decks);
+  if (profileError) return <ErrorDisplay error={profileError} />;
+  if (decksError) return <ErrorDisplay error={decksError} />;
 
   return (
     <div className="p-8">
@@ -29,7 +36,11 @@ const Dashboard = async () => {
       </h1>
 
       <div>
-        {decks.length === 0 ? <NoDecksFallback /> : <div>Decks</div>}
+        {decks === null || decks.length === 0 ? (
+          <NoDecksFallback />
+        ) : (
+          <div>${JSON.stringify(decks)}</div>
+        )}
       </div>
     </div>
   );

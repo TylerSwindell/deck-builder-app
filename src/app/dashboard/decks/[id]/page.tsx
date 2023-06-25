@@ -19,40 +19,55 @@ const DeckPage = ({ params }: { params: { id: number } }) => {
         .from('decks')
         .select(
           `
-        comander_id,
-        created_at,
-        deck_format,
-        id,
-        last_updated,
-        name,
-        oathbreaker_id,
-        signature_spell_id,
-        decks_cards (
-            deck_id,
-            gatherer_id,
-            id
-        ),
-        decks_formats (
-            allow_rares,
-            card_limit,
-            format_name,
-            has_commander,
-            has_oath_breaker,
-            has_signature_spell,
-            id
-        )
-        `
+            comander_id,
+            created_at,
+            deck_format,
+            id,
+            last_updated,
+            name,
+            oathbreaker_id,
+            signature_spell_id,
+            decks_cards (
+                deck_id,
+                gatherer_id,
+                id
+            ),
+            decks_formats (
+                id,
+                allow_rares,
+                card_limit,
+                format_name,
+                has_commander,
+                has_oath_breaker,
+                has_signature_spell
+            )
+            `
         )
         .eq('id', params.id)
         .single();
 
       if (error) {
+        console.log(error);
         throw error;
       }
 
       if (data) {
-        console.log(`>>>${JSON.stringify(data)}`);
+        console.log(data);
+        setDeck({
+          comander_id: data.comander_id,
+          created_at: data.created_at,
+          deck_format: data.deck_format,
+          id: data.id,
+          last_updated: data.last_updated,
+          name: data.name,
+          oathbreaker_id: data.oathbreaker_id,
+          signature_spell_id: data.signature_spell_id,
+          user_id: null,
+        });
+        setCards(data.decks_cards);
+        setFormat(data.deck_format);
       }
+      setLoading(false);
     } catch (error) {
       alert('Error loading user data!');
     } finally {
