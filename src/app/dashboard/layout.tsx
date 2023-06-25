@@ -4,6 +4,7 @@ import Signout from '../components/signout';
 import PageContainer from '../components/pageContainer';
 import AppHeader from '../components/appHeader';
 import Footer from '../components/footer';
+import Link from 'next/link';
 
 export default function Layout({
   children,
@@ -21,6 +22,14 @@ export default function Layout({
         <AppHeader>
           <div className="hidden lg:block">
             <ul className="flex space-x-4">
+              <li>
+                <Link
+                  className="jaceNeonText"
+                  href={'/dashboard/build'}
+                >
+                  Deck Builder
+                </Link>
+              </li>
               <li>
                 <Signout variant="neon" />
               </li>
@@ -50,9 +59,16 @@ export default function Layout({
             <div className="lg:hidden">
               <ul className="bg-white border rounded-md shadow-lg absolute right-0 mt-2  w-48 divide-y divide-blue-200">
                 <li className="pl-2 pt-2 pb-2">
+                  <Link
+                    className="jaceNeonText"
+                    href={'/dashboard/build'}
+                  >
+                    Deck Builder
+                  </Link>
+                </li>
+                <li className="pl-2 pt-2 pb-2">
                   <Signout variant="blue" />
                 </li>
-                <li className="pl-2 pt-2 pb-2">Settings</li>
               </ul>
             </div>
           )}
