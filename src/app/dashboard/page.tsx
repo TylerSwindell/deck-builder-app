@@ -1,8 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import Signout from '../components/signout';
 import Link from 'next/link';
+import ErrorDisplay from '../components/errorDisplay';
 
 const Dashboard = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -10,12 +10,20 @@ const Dashboard = async () => {
     data: { session },
   } = await supabase.auth.getSession();
   if (!session) redirect('/');
-  let username = 'Test';
+  const user = session?.user;
+  let { data: profile, error } = await supabase
+    .from('profiles')
+    .select(`username, avatar_url`)
+    .eq('id', user?.id)
+    .single();
+
   let decks = [{ id: 0, name: 'test', format: 'edh' }];
+  if (error) return <ErrorDisplay error={error} />;
+
   return (
     <div className="p-8">
       <h1 className="text-2xl mb-4 text-center text-white">
-        Welcome, {username}!
+        Welcome, {profile?.username}!
       </h1>
       <div className="grid grid-cols-3 gap-4">
         {decks.map((deck) => (
