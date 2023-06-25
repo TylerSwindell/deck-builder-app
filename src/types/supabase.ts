@@ -6,6 +6,8 @@ export type Json =
   | { [key: string]: Json }
   | Json[];
 
+export type DeckWithFormatAndCards = Deck & Format & Card;
+
 export type Deck = {
   comander_id: string | null;
   created_at: string | null;
