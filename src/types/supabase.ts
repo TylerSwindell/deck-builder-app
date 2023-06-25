@@ -34,6 +34,7 @@ export type Card = {
   deck_id: number | null;
   gatherer_id: string;
   id: number;
+  multiverse_id: number;
 };
 
 export type Profile = {
