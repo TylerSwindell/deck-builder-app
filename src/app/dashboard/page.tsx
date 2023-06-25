@@ -23,9 +23,7 @@ const Dashboard = async () => {
     .from('decks')
     .select(`*`)
     .eq('user_id', user?.id);
-  console.log(user?.id);
 
-  console.log(decks);
   if (profileError) return <ErrorDisplay error={profileError} />;
   if (decksError) return <ErrorDisplay error={decksError} />;
 
