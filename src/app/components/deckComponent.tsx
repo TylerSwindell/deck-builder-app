@@ -6,6 +6,7 @@ const DeckComponent: React.FC<{
   format: Format;
   cards: Card[];
 }> = ({ deck, format, cards }) => {
+  console.log(format);
   return (
     <div className="p-4 bg-gray-100 rounded shadow-md">
       <h2 className="text-2xl font-bold mb-4">{deck.name}</h2>

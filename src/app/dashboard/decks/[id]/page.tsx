@@ -32,14 +32,14 @@ const DeckPage = ({ params }: { params: { id: number } }) => {
                 gatherer_id,
                 id
             ),
-            decks_formats (
-                id,
+            decks_formats: deck_format (
                 allow_rares,
                 card_limit,
                 format_name,
                 has_commander,
                 has_oath_breaker,
-                has_signature_spell
+                has_signature_spell,
+                id    
             )
             `
         )
@@ -65,7 +65,7 @@ const DeckPage = ({ params }: { params: { id: number } }) => {
           user_id: null,
         });
         setCards(data.decks_cards);
-        setFormat(data.deck_format);
+        setFormat(data.decks_formats);
       }
       setLoading(false);
     } catch (error) {
