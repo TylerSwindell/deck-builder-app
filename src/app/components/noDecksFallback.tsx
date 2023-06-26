@@ -12,7 +12,7 @@ const NoDecksFallback: React.FC = () => {
         your own Magic: The Gathering decks now!
       </p>
       <button className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-        <Link href="/dashboard/build">Create New Deck </Link>
+        <Link href="/dashboard/decks">Create New Deck </Link>
       </button>
     </div>
   );

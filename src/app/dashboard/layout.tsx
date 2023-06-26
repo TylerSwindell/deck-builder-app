@@ -25,7 +25,7 @@ export default function Layout({
               <li>
                 <Link
                   className="jaceNeonText"
-                  href={'/dashboard/build'}
+                  href={'/dashboard/decks'}
                 >
                   Deck Builder
                 </Link>

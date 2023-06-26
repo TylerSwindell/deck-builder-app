@@ -10,14 +10,21 @@ export type DeckWithFormatAndCards = Deck & Format & Card;
 
 export type Deck = {
   comander_id: string | null;
-  created_at: string | null;
-  deck_format: number | null;
+  deck_format: number;
   id: number;
-  last_updated: string | null;
   name: string | null;
+  notes: string | null;
   oathbreaker_id: string | null;
   signature_spell_id: string | null;
   user_id: string | null;
+};
+
+export type DeckVersion = {
+  created_at: string | null;
+  deck_id: number | null;
+  id: string;
+  losses: number | null;
+  wins: number | null;
 };
 
 export type Format = {
@@ -31,10 +38,11 @@ export type Format = {
 };
 
 export type Card = {
-  deck_id: number | null;
+  deck_id: number;
   gatherer_id: string;
   id: number;
-  multiverse_id: number;
+  multiverse_id: number | null;
+  version_id: string;
 };
 
 export type Profile = {
@@ -47,36 +55,64 @@ export type Profile = {
 export interface Database {
   public: {
     Tables: {
+      deck_version: {
+        Row: {
+          created_at: string | null;
+          deck_id: number | null;
+          id: string;
+          losses: number | null;
+          wins: number | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          deck_id?: number | null;
+          id: string;
+          losses?: number | null;
+          wins?: number | null;
+        };
+        Update: {
+          created_at?: string | null;
+          deck_id?: number | null;
+          id?: string;
+          losses?: number | null;
+          wins?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'deck_version_deck_id_fkey';
+            columns: ['deck_id'];
+            referencedRelation: 'decks';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
       decks: {
         Row: {
           comander_id: string | null;
-          created_at: string | null;
-          deck_format: number | null;
+          deck_format: number;
           id: number;
-          last_updated: string | null;
           name: string | null;
+          notes: string | null;
           oathbreaker_id: string | null;
           signature_spell_id: string | null;
           user_id: string | null;
         };
         Insert: {
           comander_id?: string | null;
-          created_at?: string | null;
-          deck_format?: number | null;
+          deck_format: number;
           id?: number;
-          last_updated?: string | null;
           name?: string | null;
+          notes?: string | null;
           oathbreaker_id?: string | null;
           signature_spell_id?: string | null;
           user_id?: string | null;
         };
         Update: {
           comander_id?: string | null;
-          created_at?: string | null;
-          deck_format?: number | null;
+          deck_format?: number;
           id?: number;
-          last_updated?: string | null;
           name?: string | null;
+          notes?: string | null;
           oathbreaker_id?: string | null;
           signature_spell_id?: string | null;
           user_id?: string | null;
@@ -98,25 +134,37 @@ export interface Database {
       };
       decks_cards: {
         Row: {
-          deck_id: number | null;
+          deck_id: number;
           gatherer_id: string;
           id: number;
+          multiverse_id: number | null;
+          version_id: string;
         };
         Insert: {
-          deck_id?: number | null;
+          deck_id: number;
           gatherer_id: string;
-          id: number;
+          id?: number;
+          multiverse_id?: number | null;
+          version_id: string;
         };
         Update: {
-          deck_id?: number | null;
+          deck_id?: number;
           gatherer_id?: string;
           id?: number;
+          multiverse_id?: number | null;
+          version_id?: string;
         };
         Relationships: [
           {
             foreignKeyName: 'decks_cards_deck_id_fkey';
             columns: ['deck_id'];
             referencedRelation: 'decks';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'decks_cards_version_id_fkey';
+            columns: ['version_id'];
+            referencedRelation: 'deck_version';
             referencedColumns: ['id'];
           }
         ];
@@ -184,7 +232,18 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_deck_cards: {
+        Args: {
+          deck_id_param: number;
+        };
+        Returns: {
+          deck_id: number;
+          gatherer_id: string | null;
+          id: number;
+          multiverse_id: number;
+          version_id: string;
+        }[];
+      };
     };
     Enums: {
       [_ in never]: never;

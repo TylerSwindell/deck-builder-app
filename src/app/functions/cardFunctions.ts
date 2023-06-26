@@ -14,12 +14,9 @@ export async function getCardsInDeck(
 ): Promise<GathererCard[]> {
   const fetchPromises = ids.map(async (id) => {
     const card = await fetchCard(id);
-    console.log(card.name);
     return card;
   });
 
   const cards = await Promise.all(fetchPromises);
-  console.log('>>>cards');
-  console.log(cards);
   return cards;
 }

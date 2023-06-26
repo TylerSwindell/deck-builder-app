@@ -4,10 +4,10 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import ErrorDisplay from '../components/errorDisplay';
 import NoDecksFallback from '../components/noDecksFallback';
-import { Deck } from '@/types/supabase';
+import { Database, Deck } from '@/types/supabase';
 
 const Dashboard = async () => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = createServerComponentClient<Database>({ cookies });
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -37,7 +37,21 @@ const Dashboard = async () => {
         {decks === null || decks.length === 0 ? (
           <NoDecksFallback />
         ) : (
-          <div>${JSON.stringify(decks)}</div>
+          <div className="grid grid-cols-3 gap-4">
+            {decks.map((deck: Deck) => (
+              <div className="p-4 border rounded-md">
+                <h2 className="text-lg text-white font-bold mb-2">
+                  {deck.name || 'Untitled Deck'}
+                </h2>
+                <Link
+                  className="text-blue-500 hover:underline"
+                  href={`/dashboard/decks/${deck.id}`}
+                >
+                  View More
+                </Link>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
