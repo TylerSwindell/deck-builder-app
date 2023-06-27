@@ -45,7 +45,7 @@ const Dashboard = async () => {
                 </h2>
                 <Link
                   className="text-blue-500 hover:underline"
-                  href={`/dashboard/decks/${deck.id}`}
+                  href={`/decks/${deck.id}`}
                 >
                   View More
                 </Link>
