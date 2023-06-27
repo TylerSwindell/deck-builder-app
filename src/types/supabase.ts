@@ -6,7 +6,22 @@ export type Json =
   | { [key: string]: Json }
   | Json[];
 
-export type DeckWithFormatAndCards = Deck & Format & Card;
+export enum Colors {
+  Blue = 1,
+  Black = 2,
+  Red = 3,
+  Green = 4,
+  White = 5,
+}
+
+export type CompleteDeckInformation = Deck &
+  Format &
+  Color[] &
+  Card[];
+
+export type DeckWithColors = Deck & {
+  decks_colors: DeckColor[] | null;
+};
 
 export type Deck = {
   comander_id: string | null;
@@ -17,6 +32,12 @@ export type Deck = {
   oathbreaker_id: string | null;
   signature_spell_id: string | null;
   user_id: string | null;
+};
+
+export type DeckColor = {
+  color_id: number | null;
+  deck_id: number | null;
+  id: number;
 };
 
 export type DeckVersion = {
@@ -52,9 +73,33 @@ export type Profile = {
   username: string | null;
 };
 
+export type Color = {
+  color: string | null;
+  id: number;
+  letter: string | null;
+};
+
 export interface Database {
   public: {
     Tables: {
+      colors: {
+        Row: {
+          color: string | null;
+          id: number;
+          letter: string | null;
+        };
+        Insert: {
+          color?: string | null;
+          id?: number;
+          letter?: string | null;
+        };
+        Update: {
+          color?: string | null;
+          id?: number;
+          letter?: string | null;
+        };
+        Relationships: [];
+      };
       deck_version: {
         Row: {
           created_at: string | null;
@@ -66,7 +111,7 @@ export interface Database {
         Insert: {
           created_at?: string | null;
           deck_id?: number | null;
-          id: string;
+          id?: string;
           losses?: number | null;
           wins?: number | null;
         };
@@ -135,23 +180,23 @@ export interface Database {
       decks_cards: {
         Row: {
           deck_id: number;
-          gatherer_id: string;
+          gatherer_id: string | null;
           id: number;
-          multiverse_id: number | null;
+          multiverse_id: number;
           version_id: string;
         };
         Insert: {
           deck_id: number;
-          gatherer_id: string;
+          gatherer_id?: string | null;
           id?: number;
-          multiverse_id?: number | null;
+          multiverse_id: number;
           version_id: string;
         };
         Update: {
           deck_id?: number;
-          gatherer_id?: string;
+          gatherer_id?: string | null;
           id?: number;
-          multiverse_id?: number | null;
+          multiverse_id?: number;
           version_id?: string;
         };
         Relationships: [
@@ -165,6 +210,37 @@ export interface Database {
             foreignKeyName: 'decks_cards_version_id_fkey';
             columns: ['version_id'];
             referencedRelation: 'deck_version';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
+      decks_colors: {
+        Row: {
+          color_id: number | null;
+          deck_id: number | null;
+          id: number;
+        };
+        Insert: {
+          color_id?: number | null;
+          deck_id?: number | null;
+          id: number;
+        };
+        Update: {
+          color_id?: number | null;
+          deck_id?: number | null;
+          id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'decks_colors_color_id_fkey';
+            columns: ['color_id'];
+            referencedRelation: 'colors';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'decks_colors_deck_id_fkey';
+            columns: ['deck_id'];
+            referencedRelation: 'decks';
             referencedColumns: ['id'];
           }
         ];

@@ -11,14 +11,15 @@ const DeckBuilder = async () => {
     .from('decks')
     .select(
       `
-            user_id,
+        user_id,
               comander_id,
               deck_format,
               id,
               name,
               oathbreaker_id,
               signature_spell_id,
-              notes          
+              notes,
+              decks_colors ( * )
               `
     );
 

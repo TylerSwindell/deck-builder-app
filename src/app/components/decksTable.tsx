@@ -1,9 +1,9 @@
 'use client';
-import { Deck } from '@/types/supabase';
+import { Colors, Deck, DeckWithColors } from '@/types/supabase';
 import React, { useState } from 'react';
 
 interface DecksTableProps {
-  decks: Deck[];
+  decks: DeckWithColors[];
 }
 
 const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
@@ -78,7 +78,7 @@ const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
                 </span>
               )}
             </th>
-            {/* Add more table columns as needed */}
+            <th className="px-4 py-2 cursor-pointer">Colors</th>
           </tr>
         </thead>
         <tbody>
@@ -86,6 +86,14 @@ const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
             <tr key={deck.id}>
               <td className="px-4 py-2">{deck?.name}</td>
               <td className="px-4 py-2">{deck?.deck_format}</td>
+              <td className="px-4 py-2">
+                {deck?.decks_colors
+                  ?.map((color) => Colors[color.color_id || 0])
+                  .reduce((prev, current) => {
+                    return prev + ', ' + current;
+                  })}
+              </td>
+
               {/* Render additional columns */}
             </tr>
           ))}
