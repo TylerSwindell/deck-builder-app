@@ -1,28 +1,25 @@
 'use client';
-
-import React, { useState } from 'react';
-import AppHeader from './appHeader';
 import Link from 'next/link';
+import React, { useState } from 'react';
+import Signout from '../signout';
 
-const HomePageHeader = () => {
+const AppHeaderMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
   return (
-    <AppHeader spellbookLink="">
+    <>
       <div className="hidden lg:block">
         <ul className="flex space-x-4">
           <li>
-            <Link className="jaceNeonText" href="/register">
-              Register
+            <Link className="jaceNeonText" href={'/decks'}>
+              Decks
             </Link>
           </li>
           <li>
-            <Link className="jaceNeonText" href="/signin">
-              Sign In
-            </Link>
+            <Signout variant="neon" />
           </li>
         </ul>
       </div>
@@ -49,27 +46,19 @@ const HomePageHeader = () => {
       {showMenu && (
         <div className="lg:hidden">
           <ul className="bg-white border rounded-md shadow-lg absolute right-0 mt-2  w-48 divide-y divide-blue-200">
-            <li>
-              <Link
-                className="jaceNeonText pl-2 pt-2 pb-2"
-                href="/register"
-              >
-                Register
+            <li className="pl-2 pt-2 pb-2">
+              <Link className="jaceNeonText" href={'/decks'}>
+                Deck Builder
               </Link>
             </li>
-            <li>
-              <Link
-                className="jaceNeonText pl-2 pt-2 pb-2"
-                href="/signin"
-              >
-                Sign In
-              </Link>
+            <li className="pl-2 pt-2 pb-2">
+              <Signout variant="blue" />
             </li>
           </ul>
         </div>
       )}
-    </AppHeader>
+    </>
   );
 };
 
-export default HomePageHeader;
+export default AppHeaderMenu;

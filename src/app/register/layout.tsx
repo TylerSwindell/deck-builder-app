@@ -1,6 +1,6 @@
 import React from 'react';
 import PageContainer from '../components/pageContainer';
-import AppHeader from '../components/appHeader';
+import AppHeader from '../components/header/appHeader';
 import Link from 'next/link';
 import Footer from '../components/footer';
 

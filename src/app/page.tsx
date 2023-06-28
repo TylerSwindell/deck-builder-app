@@ -3,10 +3,10 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import PageContainer from './components/pageContainer';
 import Link from 'next/link';
-import AppHeader from './components/appHeader';
+import AppHeader from './components/header/appHeader';
 import Footer from './components/footer';
 import { useState } from 'react';
-import HomePageHeader from './components/homePageHeader';
+import HomePageHeader from './components/header/homePageHeader';
 
 export default async function Home() {
   const supabase = createServerComponentClient({ cookies });

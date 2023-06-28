@@ -1,8 +1,7 @@
 import React from 'react';
 import PageContainer from '../components/pageContainer';
-import AppHeader from '../components/appHeader';
-import Link from 'next/link';
 import Footer from '../components/footer';
+import HomePageHeader from '../components/header/homePageHeader';
 
 export default function Layout({
   children,
@@ -12,27 +11,7 @@ export default function Layout({
   return (
     <PageContainer>
       <>
-        <AppHeader spellbookLink="dashboard">
-          <div className="hidden lg:block">
-            <ul className="flex space-x-4">
-              <li>
-                <Link className="jaceNeonText" href="/decks">
-                  Decks
-                </Link>
-              </li>
-              <li>
-                <Link className="jaceNeonText" href="/register">
-                  Register
-                </Link>
-              </li>
-              <li>
-                <Link className="jaceNeonText" href="/signin">
-                  Sign In
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </AppHeader>
+        <HomePageHeader />
         <div className="m-auto"> {children}</div>
         <Footer />
       </>

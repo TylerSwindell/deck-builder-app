@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
+import AppHeaderMenu from './appHeaderMenu';
+import HomepageHeaderMenu from './homepageHeaderMenu';
 
 const AppHeader = ({
   spellbookLink,
-  children,
+  hasSession,
 }: {
   spellbookLink: 'dashboard' | '';
-  children: React.ReactNode;
+  hasSession: boolean;
 }) => {
   return (
     <header className=" py-4 px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 bg-sky-400">
@@ -17,7 +19,9 @@ const AppHeader = ({
           </h1>
         </Link>
 
-        <nav>{children}</nav>
+        <nav>
+          {hasSession ? <AppHeaderMenu /> : <HomepageHeaderMenu />}
+        </nav>
       </div>
     </header>
   );
