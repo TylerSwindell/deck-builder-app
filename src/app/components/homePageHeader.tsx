@@ -11,7 +11,7 @@ const HomePageHeader = () => {
     setShowMenu(!showMenu);
   };
   return (
-    <AppHeader>
+    <AppHeader spellbookLink="">
       <div className="hidden lg:block">
         <ul className="flex space-x-4">
           <li>

@@ -19,12 +19,12 @@ export default function Layout({
   return (
     <PageContainer>
       <>
-        <AppHeader>
+        <AppHeader spellbookLink="">
           <div className="hidden lg:block">
             <ul className="flex space-x-4">
               <li>
                 <Link className="jaceNeonText" href={'/decks'}>
-                  Deck Builder
+                  Decks
                 </Link>
               </li>
               <li>
