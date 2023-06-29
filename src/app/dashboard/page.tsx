@@ -2,7 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import ErrorDisplay from '../components/errorDisplay';
+import ErrorDisplay from '../components/errors/errorDisplay';
 import NoDecksFallback from '../components/noDecksFallback';
 import { Database, Deck } from '@/types/supabase';
 

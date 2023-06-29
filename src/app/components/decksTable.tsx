@@ -1,5 +1,6 @@
 'use client';
 import { Colors, Deck, DeckWithColors } from '@/types/supabase';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 interface DecksTableProps {
@@ -84,7 +85,9 @@ const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
         <tbody>
           {currentDecks.map((deck) => (
             <tr key={deck.id}>
-              <td className="px-4 py-2">{deck?.name}</td>
+              <td className="px-4 py-2">
+                <Link href={`/decks/${deck.id}`}>{deck?.name}</Link>
+              </td>
               <td className="px-4 py-2">{deck?.deck_format}</td>
               <td className="px-4 py-2">
                 {deck?.decks_colors

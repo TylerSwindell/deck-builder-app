@@ -12,14 +12,14 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     .from('decks')
     .select(
       `
-            user_id,
-              comander_id,
-              deck_format,
-              id,
-              name,
-              oathbreaker_id,
-              signature_spell_id             
-              `
+      user_id,
+      comander_id,
+      deck_format,
+      id,
+      name,
+      oathbreaker_id,
+      signature_spell_id             
+      `
     )
     .eq('id', id)
     .single();
@@ -34,13 +34,6 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     cards?.map((card) => card.multiverse_id) || []
   );
 
-  // let { data: version, error: versionError } = await supabase
-  //   .from('deck_version')
-  //   .select(`id`)
-  //   .eq('deck_id', data?.id)
-  //   .order('created_at', { ascending: false })
-  //   .single();
-
   let { data: format, error: formatError } = await supabase
     .from('decks_formats')
     .select(`*`)
@@ -48,7 +41,6 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     .single();
 
   if (error || formatError) {
-    console.log(error);
     throw error;
   }
 
