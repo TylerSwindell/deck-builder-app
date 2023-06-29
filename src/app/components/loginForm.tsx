@@ -1,21 +1,30 @@
 'use client';
-
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import ErrorText from './errors/ErrorText';
+import { AuthApiError } from '@supabase/supabase-js';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<AuthApiError | null>(null);
   const router = useRouter();
   const supabase = createClientComponentClient();
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    router.refresh();
+    await supabase.auth
+      .signInWithPassword({
+        email,
+        password,
+      })
+      .then((value) => {
+        if (value.error) throw value.error;
+        if (value.data.session) router.refresh();
+      })
+      .catch((e: AuthApiError) => {
+        setError(e);
+      });
   };
 
   return (
@@ -57,6 +66,7 @@ export default function LoginForm() {
         >
           Sign in
         </button>
+        {error && <ErrorText message={error.message} />}
       </div>
     </div>
   );
