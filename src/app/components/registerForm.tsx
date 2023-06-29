@@ -1,29 +1,38 @@
 'use client';
-
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { AuthApiError } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import ErrorText from './errors/ErrorText';
 
 export default function RegisterForm() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<AuthApiError | null>(null);
+
   const router = useRouter();
   const supabase = createClientComponentClient();
 
   const handleSignUp = async () => {
-    await supabase.auth.signUp({
-      email,
-      password,
-
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-        data: {
-          username: username,
+    await supabase.auth
+      .signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${location.origin}/auth/callback`,
+          data: {
+            username: username,
+          },
         },
-      },
-    });
-    router.refresh();
+      })
+      .then((value) => {
+        if (value.error) throw value.error;
+        if (value.data.user) router.replace('/register/registered');
+      })
+      .catch((e: AuthApiError) => {
+        setError(e);
+      });
   };
 
   return (
@@ -81,6 +90,7 @@ export default function RegisterForm() {
         >
           Sign up
         </button>
+        {error && <ErrorText message={error.message} />}
       </div>
     </div>
   );
