@@ -25,25 +25,28 @@
 
 
 .checkbox-red {
-  --checkbox-color: #ff0000; /* Red color */
+  --checkbox-color: #f9b39a; /* Red color */
 }
 
 .checkbox-green {
-  --checkbox-color: #00ff00; /* Green color */
+  --checkbox-color: #9bd2ad; /* Green color */
 }
 
 .checkbox-white {
-  --checkbox-color: #ffffff; /* White color */
+  --checkbox-color: #f8f7d3; /* White color */
 }
 
 .checkbox-black {
-  --checkbox-color: #000000; /* Black color */
+  --checkbox-color: #d2c9c6; /* Black color */
 }
 
 .checkbox-blue {
-  --checkbox-color: #0000ff; /* Blue color */
+  --checkbox-color: #ace0fa; /* Blue color */
 }
 
+.checkbox-colorless {
+  --checkbox-color: #cec3c1; /* Blue color */
+}
 /* Default checkbox styles */
 .form-checkbox {
   position: relative;
@@ -59,6 +62,10 @@
   box-shadow: inset 0 0 0 2px transparent;
 }
 
+.form-checkbox:disabled {
+  border: 2px solid rgb(55 65 81);
+}
+
 /* Custom checkbox styles for each color */
 .form-checkbox:before {
   /* Check mark pseudo-element */
@@ -68,7 +75,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.2, transform 1;
+  transition: opacity 0.2;
   background-color: var(--checkbox-color);
   width: 0.75rem;
   height: 2px;

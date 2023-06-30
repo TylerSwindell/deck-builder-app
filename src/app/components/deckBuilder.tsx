@@ -105,8 +105,8 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         disabled={isDisabled(color)}
       />
       <span
-        className={`ml-2 text-gray-700 ${
-          isDisabled(color) ? 'text-gray-300' : ''
+        className={`ml-2 ${
+          isDisabled(color) ? 'text-gray-700' : 'text-gray-300'
         }`}
       >
         {color.color}
@@ -115,12 +115,12 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   ));
 
   return (
-    <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 shadow-sm">
+    <div className="bg-black border border-gray-400 rounded-lg p-4 shadow-sm">
       <div className="p-4">
         <div className="mb-4">
           <label
             htmlFor="format"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Format
           </label>
@@ -138,7 +138,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         <div className="mb-4">
           <label
             htmlFor="colors"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Colors
           </label>
@@ -148,7 +148,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         <div className="mb-4">
           <label
             htmlFor="deckName"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Deck Name
           </label>
@@ -164,7 +164,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           <div className="mb-4">
             <label
               htmlFor="commanderId"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-300"
             >
               Commander ID
             </label>
@@ -183,7 +183,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
             <div className="mb-4">
               <label
                 htmlFor="oathbreakerId"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-300"
               >
                 Oathbreaker ID
               </label>
@@ -200,7 +200,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
             <div className="mb-4">
               <label
                 htmlFor="signatureSpellId"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-300"
               >
                 Signature Spell ID
               </label>
@@ -219,7 +219,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         <div className="mb-4">
           <label
             htmlFor="deckNotes"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-300"
           >
             Deck Notes
           </label>

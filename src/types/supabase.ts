@@ -6,15 +6,6 @@ export type Json =
   | { [key: string]: Json }
   | Json[];
 
-export enum Colors {
-  Blue = 1,
-  Black = 2,
-  Red = 3,
-  Green = 4,
-  White = 5,
-  Colorless = 6,
-}
-
 export type CompleteDeckInformation = Deck &
   Format &
   Color[] &
