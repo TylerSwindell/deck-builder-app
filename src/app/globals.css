@@ -13,13 +13,89 @@
     transition: text-shadow 0.5s, color 0.5s;
   }
 
-  .jaceNeonText:hover {
-    color:#fff;
-    text-shadow:
+.jaceNeonText:hover {
+  color:#fff;
+  text-shadow:
         0 0 7px #84cfdb,
         0 0 10px #84cfdb,
         0 0 21px #84cfdb,
         0 0 42px #84cfdb,
         0 0 82px #84cfdb;
-  }
-  
+}
+
+
+.checkbox-red {
+  --checkbox-color: #ff0000; /* Red color */
+}
+
+.checkbox-green {
+  --checkbox-color: #00ff00; /* Green color */
+}
+
+.checkbox-white {
+  --checkbox-color: #ffffff; /* White color */
+}
+
+.checkbox-black {
+  --checkbox-color: #000000; /* Black color */
+}
+
+.checkbox-blue {
+  --checkbox-color: #0000ff; /* Blue color */
+}
+
+/* Default checkbox styles */
+.form-checkbox {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  transition: border-color 0.2s;
+  border-radius: 4px;
+  /* Updated border styles for checked state */
+  border: 2px solid #cbd5e0;
+  box-shadow: inset 0 0 0 2px transparent;
+}
+
+/* Custom checkbox styles for each color */
+.form-checkbox:before {
+  /* Check mark pseudo-element */
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2, transform 1;
+  background-color: var(--checkbox-color);
+  width: 0.75rem;
+  height: 2px;
+}
+
+/* Checked state styles for each color */
+.form-checkbox:checked {
+  /* Updated border and box shadow styles for checked state */
+  border-color: var(--checkbox-color);
+  box-shadow: inset 0 0 0 2px var(--checkbox-color);
+}
+
+.form-checkbox:checked:before {
+  /* Style of the check mark when the checkbox is checked */
+  opacity: 1;
+  /* Adjust the checkmark shape */
+  transform: translate(-50%, -50%) rotate(315deg) scaleX(0.6);
+}
+
+/* Hover styles for each color */
+.form-checkbox:not(:disabled):hover {
+  /* Style when the checkbox is hovered */
+  border-color: var(--checkbox-color);
+}
+
+/* Hover styles for the check mark for each color */
+.form-checkbox:not(:disabled):hover:before {
+  /* Style of the check mark when the checkbox is hovered */
+  opacity: 1;
+}

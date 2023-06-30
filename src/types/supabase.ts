@@ -12,6 +12,7 @@ export enum Colors {
   Red = 3,
   Green = 4,
   White = 5,
+  Colorless = 6,
 }
 
 export type CompleteDeckInformation = Deck &

@@ -4,7 +4,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import { cookies } from 'next/headers';
 
-const DeckBuilder = async () => {
+const DecksPage = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   let { data: decks, error: deckError } = await supabase
@@ -28,4 +28,4 @@ const DeckBuilder = async () => {
   return <DecksTable decks={decks} />;
 };
 
-export default DeckBuilder;
+export default DecksPage;
