@@ -2,9 +2,9 @@
 import ErrorText from '@/app/components/errors/ErrorText';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthError } from '@supabase/supabase-js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const PasswordResetForm = () => {
+const ForgotPwForm = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState<AuthError | null>(null);
   const [isSent, setIsSent] = useState(false);
@@ -13,10 +13,13 @@ const PasswordResetForm = () => {
     setError(null);
     setIsSent(false);
     let { data, error: submitError } =
-      await supabase.auth.resetPasswordForEmail(email);
+      await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${location.origin}/dashboard/reset`,
+      });
     if (submitError) setError(submitError);
     setIsSent(data !== null);
   };
+
   return (
     <div className="bg-gray-100 rounded-lg p-8 shadow-md">
       <div className="flex flex-col space-y-4">
@@ -43,11 +46,11 @@ const PasswordResetForm = () => {
         </button>
         {error && <ErrorText message={error.message} />}
         {isSent && (
-          <p>Check your email for the password reset link</p>
+          <p>Sent!. Check your email for the password reset link</p>
         )}
       </div>
     </div>
   );
 };
 
-export default PasswordResetForm;
+export default ForgotPwForm;

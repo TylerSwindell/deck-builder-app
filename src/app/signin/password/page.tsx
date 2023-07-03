@@ -1,5 +1,5 @@
 import React from 'react';
-import PasswordResetForm from './passwordResetForm';
+import ForgotPwForm from './forgotPwForm';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -13,7 +13,7 @@ const PasswordRecoveryPage = async () => {
 
   return (
     <div className="m-auto">
-      <PasswordResetForm />
+      <ForgotPwForm />
     </div>
   );
 };
