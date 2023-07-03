@@ -6,16 +6,11 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const ResetPwForm = () => {
-  useEffect(() => {
-    supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log(`>>>`);
-      console.log(session);
-    });
-  }, []);
   const [password, setPassword] = useState('');
   const [error, setError] = useState<AuthError | null>(null);
   const supabase = createClientComponentClient();
   const handleReset = async () => {
+    debugger;
     const { data, error: updateError } =
       await supabase.auth.updateUser({ password: 'new-password' });
     if (updateError) setError(updateError);
