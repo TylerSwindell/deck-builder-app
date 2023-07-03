@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import ErrorText from './errors/ErrorText';
 import { AuthApiError } from '@supabase/supabase-js';
+import Link from 'next/link';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
@@ -67,6 +68,7 @@ export default function LoginForm() {
           Sign in
         </button>
         {error && <ErrorText message={error.message} />}
+        <Link href={`/signin/password`}>Forgot Password?</Link>
       </div>
     </div>
   );

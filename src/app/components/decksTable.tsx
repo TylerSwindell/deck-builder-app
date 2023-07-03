@@ -1,5 +1,6 @@
 'use client';
-import { Colors, Deck, DeckWithColors } from '@/types/supabase';
+import { Colors } from '@/types/enums';
+import { Deck, DeckWithColors } from '@/types/supabase';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
