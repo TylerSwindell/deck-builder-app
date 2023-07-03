@@ -2,18 +2,19 @@
 import ErrorText from '@/app/components/errors/ErrorText';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthError, User } from '@supabase/supabase-js';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const ResetPwForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<AuthError | null>(null);
   const supabase = createClientComponentClient();
+  const [showMessage, setShowMessage] = useState(false);
   const handleReset = async () => {
-    debugger;
     const { data, error: updateError } =
       await supabase.auth.updateUser({ password: 'new-password' });
     if (updateError) setError(updateError);
+    if (data.user !== null) setShowMessage(true);
   };
 
   return (
@@ -42,6 +43,7 @@ const ResetPwForm = () => {
           Submit{' '}
         </button>
         {error && <ErrorText message={error.message} />}
+        {showMessage && <p>Password reset successfully</p>}
       </div>
     </div>
   );
