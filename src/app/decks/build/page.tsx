@@ -3,10 +3,15 @@ import { Database } from '@/types/supabase';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { error } from 'console';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const DeckBuilderPage = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  if (!session) redirect('/');
 
   let { data: formats, error: formatsError } = await supabase
     .from('decks_formats')
