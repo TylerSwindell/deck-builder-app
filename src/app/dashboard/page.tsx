@@ -12,6 +12,7 @@ const Dashboard = async () => {
     data: { session },
   } = await supabase.auth.getSession();
   if (!session) redirect('/');
+
   const user = session?.user;
   let { data: profile, error: profileError } = await supabase
     .from('profiles')

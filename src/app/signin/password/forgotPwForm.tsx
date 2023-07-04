@@ -2,6 +2,7 @@
 import ErrorText from '@/app/components/errors/ErrorText';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthError } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const ForgotPwForm = () => {
@@ -9,12 +10,14 @@ const ForgotPwForm = () => {
   const [error, setError] = useState<AuthError | null>(null);
   const [isSent, setIsSent] = useState(false);
   const supabase = createClientComponentClient();
+  const router = useRouter();
+
   const handleClick = async () => {
     setError(null);
     setIsSent(false);
     let { data, error: submitError } =
       await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${location.origin}/dashboard/reset`,
+        redirectTo: `${location.origin}/auth/callback?next=/dashboard/reset`,
       });
     if (submitError) setError(submitError);
     setIsSent(data !== null);
