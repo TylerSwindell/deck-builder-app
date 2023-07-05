@@ -21,6 +21,36 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   const [oathbreakerId, setOathbreakerId] = useState<string>('');
   const [signatureSpellId, setSignatureSpellId] =
     useState<string>('');
+
+  const addDeck = useCallback(async () => {
+    console.log(`${location.origin}/decks`);
+    const res = await fetch(`${location.origin}/decks/api`, {
+      method: 'POST',
+      body: JSON.stringify({
+        deck: {
+          deckName,
+          deckNotes,
+          commanderId,
+          oathbreakerId,
+          signatureSpellId,
+          selectedFormat,
+        },
+        selectedColors,
+      }),
+    });
+    console.log(res);
+    if (res.status === 201 || res.status === 200) alert('Added!');
+    else console.log(`error: ${JSON.stringify(res)}`);
+  }, [
+    selectedFormat,
+    selectedColors,
+    deckName,
+    deckNotes,
+    commanderId,
+    oathbreakerId,
+    signatureSpellId,
+  ]);
+
   const handleFormatChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -233,6 +263,9 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         </div>
 
         {/* Add button and other functionality as needed */}
+        <div>
+          <button onClick={addDeck}>Create</button>
+        </div>
       </div>
     </div>
   );

@@ -93,9 +93,10 @@ const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
               <td className="px-4 py-2">
                 {deck?.decks_colors
                   ?.map((color) => Colors[color.color_id || 0])
-                  .reduce((prev, current) => {
+                  .reduce((prev, current, i) => {
+                    if (i === 0) return current;
                     return prev + ', ' + current;
-                  })}
+                  }, '')}
               </td>
 
               {/* Render additional columns */}
