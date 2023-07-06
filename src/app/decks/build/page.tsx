@@ -1,4 +1,4 @@
-import DeckBuilder from '@/app/components/deckBuilder';
+import DeckBuilder from '@/app/components/deckbuilder/deckBuilder';
 import { Database } from '@/types/supabase';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { error } from 'console';

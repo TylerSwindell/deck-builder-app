@@ -1,6 +1,8 @@
 'use client';
 import { Color, Format } from '@/types/supabase';
 import React, { useCallback, useState } from 'react';
+import ColorSelector from './colorSelector';
+import SearchBar from './searchbar';
 
 type DeckBuilderProps = {
   formats: Format[];
@@ -15,6 +17,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     null
   );
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
+  const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [deckName, setDeckName] = useState<string>('');
   const [deckNotes, setDeckNotes] = useState<string>('');
   const [commanderId, setCommanderId] = useState<string>('');
@@ -124,23 +127,13 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   );
 
   const colorSelectors = colors.map((color) => (
-    <label key={color.id} className="inline-flex items-center mr-4">
-      <input
-        type="checkbox"
-        value={color.id}
-        checked={selectedColors.includes(color.id)}
-        onChange={handleColorChange}
-        className={`form-checkbox text-indigo-600 h-5 w-5 checkbox-${color.color!.toLowerCase()}`}
-        disabled={isDisabled(color)}
-      />
-      <span
-        className={`ml-2 ${
-          isDisabled(color) ? 'text-gray-700' : 'text-gray-300'
-        }`}
-      >
-        {color.color}
-      </span>{' '}
-    </label>
+    <ColorSelector
+      key={color.id}
+      color={color}
+      selectedColors={selectedColors}
+      isDisabled={isDisabled}
+      handleColorChange={handleColorChange}
+    />
   ));
 
   return (
@@ -260,8 +253,10 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           />
         </div>
+        <div>
+          <SearchBar />
+        </div>
 
-        {/* Add button and other functionality as needed */}
         <div>
           <button
             onClick={addDeck}
