@@ -4,10 +4,16 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { getCardsInDeck } from '../functions/cardFunctions';
 import { GathererCard } from '@/types/gatherer';
+import Link from 'next/link';
 
 const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
 
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const user = session?.user;
   let { data: deck, error: deckError } = await supabase
     .from('decks')
     .select(
@@ -50,6 +56,16 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">
           {deck.name}
         </h2>
+        {user?.id === deck.user_id && (
+          <div>
+            <Link
+              className="jaceNeonText"
+              href={`/decks/${deck.id}/edit`}
+            >
+              Edit
+            </Link>
+          </div>
+        )}
         <p className="text-sm sm:text-base">
           <span className="font-bold">Deck ID:</span> {deck.id}
         </p>

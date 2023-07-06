@@ -38,7 +38,6 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         selectedColors,
       }),
     });
-    console.log(res);
     if (res.status === 201 || res.status === 200) alert('Added!');
     else console.log(`error: ${JSON.stringify(res)}`);
   }, [
@@ -264,7 +263,12 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
 
         {/* Add button and other functionality as needed */}
         <div>
-          <button onClick={addDeck}>Create</button>
+          <button
+            onClick={addDeck}
+            className="bg-white text-black font-bold py-2 px-4 rounded"
+          >
+            Create Deck
+          </button>
         </div>
       </div>
     </div>

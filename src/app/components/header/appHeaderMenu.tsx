@@ -14,6 +14,11 @@ const AppHeaderMenu = () => {
       <div className="hidden lg:block">
         <ul className="flex space-x-4">
           <li>
+            <Link className="jaceNeonText" href={'/decks/build'}>
+              Build
+            </Link>
+          </li>
+          <li>
             <Link className="jaceNeonText" href={'/decks'}>
               Decks
             </Link>
@@ -47,8 +52,13 @@ const AppHeaderMenu = () => {
         <div className="lg:hidden">
           <ul className="bg-white border rounded-md shadow-lg absolute right-0 mt-2  w-48 divide-y divide-blue-200">
             <li className="pl-2 pt-2 pb-2">
+              <Link className="jaceNeonText" href={'/decks/build'}>
+                Build
+              </Link>
+            </li>
+            <li className="pl-2 pt-2 pb-2">
               <Link className="jaceNeonText" href={'/decks'}>
-                Deck Builder
+                Decks
               </Link>
             </li>
             <li className="pl-2 pt-2 pb-2">
