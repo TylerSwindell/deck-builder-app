@@ -10,22 +10,32 @@ interface CardProps {
 interface Props {
   items: CardProps[];
   callback: (multiverseid: number) => void;
+  cardsByQuantity: {
+    [multverseid: number]: number;
+  }[];
 }
 
-const CardList: React.FC<Props> = ({ items, callback }) => {
-  const [selectedNumbers, setSelectedNumbers] = useState<{
-    [key: number]: number;
-  }>({});
+const CardList: React.FC<Props> = ({
+  items,
+  callback,
+  cardsByQuantity,
+}) => {
+  function getValueByKey(number: number) {
+    const kvp = cardsByQuantity.find((obj) =>
+      obj.hasOwnProperty(number)
+    );
+    if (kvp) {
+      return kvp[number];
+    } else {
+      return undefined;
+    }
+  }
 
   const handleNumberChange = (
     multiverseid: number,
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedNumber = parseInt(event.target.value);
-    setSelectedNumbers((prevSelectedNumbers) => ({
-      ...prevSelectedNumbers,
-      [multiverseid]: selectedNumber,
-    }));
   };
   return (
     <div className="bg-white rounded p-4 mt-1">
@@ -38,7 +48,7 @@ const CardList: React.FC<Props> = ({ items, callback }) => {
             <div className="ml-auto flex items-center">
               <select
                 className="border border-gray-300 px-2 py-1 w-50"
-                value={selectedNumbers[item.multiverseid] || ''}
+                value={getValueByKey(item.multiverseid) || ''}
                 onChange={(event) =>
                   handleNumberChange(item.multiverseid, event)
                 }

@@ -176,6 +176,7 @@ export interface Database {
           id: number;
           multiverse_id: number;
           version_id: string;
+          number_of_copies: number | null;
         };
         Insert: {
           deck_id: number;
@@ -183,6 +184,7 @@ export interface Database {
           id?: number;
           multiverse_id: number;
           version_id: string;
+          number_of_copies: number | null;
         };
         Update: {
           deck_id?: number;
@@ -190,6 +192,7 @@ export interface Database {
           id?: number;
           multiverse_id?: number;
           version_id?: string;
+          number_of_copies: number | null;
         };
         Relationships: [
           {

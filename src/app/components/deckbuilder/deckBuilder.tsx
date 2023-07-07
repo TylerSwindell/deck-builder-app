@@ -1,8 +1,8 @@
 'use client';
 import { Color, Format } from '@/types/supabase';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import ColorSelector from './colorSelector';
-import SearchBar from './searchbar';
+import SearchBar from '../searchbar';
 import { GathererCard } from '@/types/gatherer';
 import CardList from './cardList';
 
@@ -22,6 +22,11 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   const [selectedCards, setSelectedCards] = useState<GathererCard[]>(
     []
   );
+
+  const [cardsByQuantity, setCardsByQuantity] = useState<
+    { [multverseid: number]: number }[]
+  >([]);
+
   const [deckName, setDeckName] = useState<string>('');
   const [deckNotes, setDeckNotes] = useState<string>('');
   const [commanderId, setCommanderId] = useState<string>('');
@@ -83,6 +88,10 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
 
   const handleSelectedCardChange = (card: GathererCard): void => {
     setSelectedCards((prev) => [...prev, card]);
+    setCardsByQuantity([
+      ...cardsByQuantity,
+      { [card.multiverseid]: 1 },
+    ]);
   };
 
   const handleDeckNameChange = (
@@ -147,6 +156,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
 
   return (
     <div className="bg-black border border-gray-400 rounded-lg p-4 shadow-sm">
+      <p className="text-white"> {JSON.stringify(cardsByQuantity)}</p>
       <div className="p-4">
         <div className="mb-4">
           <label
@@ -268,10 +278,16 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         <div>
           <CardList
             items={selectedCards}
+            cardsByQuantity={cardsByQuantity}
             callback={function (multiverseid: number): void {
               setSelectedCards((prev) => {
                 return prev.filter(
                   (card) => card.multiverseid !== multiverseid
+                );
+              });
+              setCardsByQuantity((prev) => {
+                return prev.filter(
+                  (card) => !card.hasOwnProperty(multiverseid)
                 );
               });
             }}
