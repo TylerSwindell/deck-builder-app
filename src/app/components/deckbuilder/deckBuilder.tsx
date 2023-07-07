@@ -3,6 +3,8 @@ import { Color, Format } from '@/types/supabase';
 import React, { useCallback, useState } from 'react';
 import ColorSelector from './colorSelector';
 import SearchBar from './searchbar';
+import { GathererCard } from '@/types/gatherer';
+import CardList from './cardList';
 
 type DeckBuilderProps = {
   formats: Format[];
@@ -17,7 +19,9 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     null
   );
   const [selectedColors, setSelectedColors] = useState<number[]>([]);
-  const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [selectedCards, setSelectedCards] = useState<GathererCard[]>(
+    []
+  );
   const [deckName, setDeckName] = useState<string>('');
   const [deckNotes, setDeckNotes] = useState<string>('');
   const [commanderId, setCommanderId] = useState<string>('');
@@ -39,6 +43,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           selectedFormat,
         },
         selectedColors,
+        selectedCards,
       }),
     });
     if (res.status === 201 || res.status === 200) alert('Added!');
@@ -74,6 +79,10 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         );
       }
     });
+  };
+
+  const handleSelectedCardChange = (card: GathererCard): void => {
+    setSelectedCards((prev) => [...prev, card]);
   };
 
   const handleDeckNameChange = (
@@ -254,13 +263,24 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           />
         </div>
         <div>
-          <SearchBar />
+          <SearchBar callback={handleSelectedCardChange} />
         </div>
-
+        <div>
+          <CardList
+            items={selectedCards}
+            callback={function (multiverseid: number): void {
+              setSelectedCards((prev) => {
+                return prev.filter(
+                  (card) => card.multiverseid !== multiverseid
+                );
+              });
+            }}
+          />
+        </div>
         <div>
           <button
             onClick={addDeck}
-            className="bg-white text-black font-bold py-2 px-4 rounded"
+            className="mt-1 bg-white text-black font-bold py-2 px-4 rounded"
           >
             Create Deck
           </button>
