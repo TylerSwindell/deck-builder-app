@@ -1,24 +1,34 @@
 'use client';
 
 import { useState } from 'react';
+import CardTooltip from '../cardTooltip';
 
 interface CardProps {
   name: string;
   multiverseid: number;
+  imageUrl?: string;
 }
 
 interface Props {
   items: CardProps[];
-  callback: (multiverseid: number) => void;
+  deleteCallback: (multiverseid: number) => void;
   cardsByQuantity: {
     [multverseid: number]: number;
   }[];
+  setCardsByQuantity: React.Dispatch<
+    React.SetStateAction<
+      {
+        [multverseid: number]: number;
+      }[]
+    >
+  >;
 }
 
 const CardList: React.FC<Props> = ({
   items,
-  callback,
+  deleteCallback,
   cardsByQuantity,
+  setCardsByQuantity,
 }) => {
   function getValueByKey(number: number) {
     const kvp = cardsByQuantity.find((obj) =>
@@ -31,26 +41,50 @@ const CardList: React.FC<Props> = ({
     }
   }
 
-  const handleNumberChange = (
+  const updateCardQuantity = (
     multiverseid: number,
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const selectedNumber = parseInt(event.target.value);
+    const quantity = parseInt(event.target.value);
+
+    setCardsByQuantity((prevCards) => {
+      // Find the index of the item with matching multiverseid
+      const index = prevCards.findIndex((card) => card[multiverseid]);
+
+      if (index !== -1) {
+        // If the item exists, update its quantity
+        const updatedCard = { ...prevCards[index] };
+        updatedCard[multiverseid] = quantity;
+
+        // Create a new array with the updated item
+        const updatedCards = [...prevCards];
+        updatedCards[index] = updatedCard;
+
+        return updatedCards;
+      }
+
+      // If the item doesn't exist, add it to the array
+      const newCard = { [multiverseid]: quantity };
+      return [...prevCards, newCard];
+    });
   };
+
   return (
     <div className="bg-white rounded p-4 mt-1">
       <div className="grid grid-cols-1 gap-4">
         {items.map((item) => (
           <div key={item.multiverseid} className="flex items-center">
             <div>
-              <span>{item.name}</span>
+              <CardTooltip imageUrl={`${item?.imageUrl}`}>
+                <span>{item.name}</span>
+              </CardTooltip>
             </div>
             <div className="ml-auto flex items-center">
               <select
                 className="border border-gray-300 px-2 py-1 w-50"
                 value={getValueByKey(item.multiverseid) || ''}
                 onChange={(event) =>
-                  handleNumberChange(item.multiverseid, event)
+                  updateCardQuantity(item.multiverseid, event)
                 }
               >
                 {Array.from(
@@ -64,7 +98,7 @@ const CardList: React.FC<Props> = ({
               </select>
               <button
                 className="ml-2 text-red-500"
-                onClick={() => callback(item.multiverseid)}
+                onClick={() => deleteCallback(item.multiverseid)}
               >
                 x
               </button>

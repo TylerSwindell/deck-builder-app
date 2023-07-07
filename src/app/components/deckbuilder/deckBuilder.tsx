@@ -63,6 +63,19 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     signatureSpellId,
   ]);
 
+  function removeCard(multiverseid: number): void {
+    setSelectedCards((prev) => {
+      return prev.filter(
+        (card) => card.multiverseid !== multiverseid
+      );
+    });
+    setCardsByQuantity((prev) => {
+      return prev.filter(
+        (card) => !card.hasOwnProperty(multiverseid)
+      );
+    });
+  }
+
   const handleFormatChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -156,7 +169,6 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
 
   return (
     <div className="bg-black border border-gray-400 rounded-lg p-4 shadow-sm">
-      <p className="text-white"> {JSON.stringify(cardsByQuantity)}</p>
       <div className="p-4">
         <div className="mb-4">
           <label
@@ -279,18 +291,8 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           <CardList
             items={selectedCards}
             cardsByQuantity={cardsByQuantity}
-            callback={function (multiverseid: number): void {
-              setSelectedCards((prev) => {
-                return prev.filter(
-                  (card) => card.multiverseid !== multiverseid
-                );
-              });
-              setCardsByQuantity((prev) => {
-                return prev.filter(
-                  (card) => !card.hasOwnProperty(multiverseid)
-                );
-              });
-            }}
+            setCardsByQuantity={setCardsByQuantity}
+            deleteCallback={removeCard}
           />
         </div>
         <div>

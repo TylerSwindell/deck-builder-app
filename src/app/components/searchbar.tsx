@@ -68,11 +68,11 @@ const SearchBar: React.FC<Props> = ({ callback }) => {
                 index % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200'
               } py-2 px-4 cursor-pointer`}
               onClick={() => {
-                callback(card);
                 setIsLoading(false);
                 setSearchResults([]);
                 setShowResults(false);
                 setSearchTerm('');
+                callback(card);
               }}
             >
               {card.name}
