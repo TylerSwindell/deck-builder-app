@@ -40,3 +40,28 @@ export interface ForeignName {
   language: string;
   multiverseid: number;
 }
+
+export type CardTypes =
+  | 'Artifact'
+  | 'Conspiracy'
+  | 'Creature'
+  | 'Dungeon'
+  | 'Enchantment'
+  | 'Instant'
+  | 'Land'
+  | 'Phenomenon'
+  | 'Plane'
+  | 'Planeswalker'
+  | 'Scheme'
+  | 'Sorcery'
+  | 'Tribal'
+  | 'Vanguard';
+
+export type CardSuperTypes =
+  | 'Legendary'
+  | 'Basic'
+  | 'Snow'
+  | 'World'
+  | 'Ongoing';
+
+export const GathererUrl = 'http://api.magicthegathering.io/v1/';

@@ -5,6 +5,7 @@ import ColorSelector from './colorSelector';
 import SearchBar from '../searchbar';
 import { GathererCard } from '@/types/gatherer';
 import CardList from './cardList';
+import CardTooltip from '../cardTooltip';
 
 type DeckBuilderProps = {
   formats: Format[];
@@ -29,13 +30,16 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
 
   const [deckName, setDeckName] = useState<string>('');
   const [deckNotes, setDeckNotes] = useState<string>('');
-  const [commanderId, setCommanderId] = useState<string>('');
+  const [commander, setCommander] = useState<GathererCard | null>(
+    null
+  );
   const [oathbreakerId, setOathbreakerId] = useState<string>('');
   const [signatureSpellId, setSignatureSpellId] =
     useState<string>('');
 
   const addDeck = useCallback(async () => {
     console.log(`${location.origin}/decks`);
+    const commanderId = commander ? commander.multiverseid : null;
     const res = await fetch(`${location.origin}/decks/api`, {
       method: 'POST',
       body: JSON.stringify({
@@ -58,7 +62,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     selectedColors,
     deckName,
     deckNotes,
-    commanderId,
+    commander,
     oathbreakerId,
     signatureSpellId,
   ]);
@@ -117,12 +121,6 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDeckNotes(event.target.value);
-  };
-
-  const handleCommanderIdChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCommanderId(event.target.value);
   };
 
   const handleOathbreakerIdChange = (
@@ -219,15 +217,25 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
               htmlFor="commanderId"
               className="block text-sm font-medium text-gray-300"
             >
-              Commander ID
+              Commander
             </label>
-            <input
-              id="commanderId"
-              type="text"
-              value={commanderId}
-              onChange={handleCommanderIdChange}
-              maxLength={100}
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            <div className="bg-white rounded p-4 mt-1">
+              <div className="grid grid-cols-1 gap-4">
+                <div className="flex items-center">
+                  {commander && (
+                    <CardTooltip imageUrl={`${commander?.imageUrl}`}>
+                      <span>{commander.name}</span>
+                    </CardTooltip>
+                  )}
+                </div>
+              </div>
+            </div>
+            <SearchBar
+              callback={(card: GathererCard) => {
+                setCommander(card);
+              }}
+              cardTypeFilters={['Creature']}
+              cardSuperTypes={['Legendary']}
             />
           </div>
         )}

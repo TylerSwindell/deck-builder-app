@@ -1,4 +1,8 @@
-import { GathererCard } from '@/types/gatherer';
+import {
+  CardSuperTypes,
+  CardTypes,
+  GathererCard,
+} from '@/types/gatherer';
 
 export async function fetchCard(id: number): Promise<GathererCard> {
   const res = await fetch(
@@ -30,17 +34,32 @@ function filterDuplicateCards(cards: GathererCard[]): GathererCard[] {
 }
 
 export async function fetchCardsByName(
-  name: string
+  name: string,
+  cardTypeFilters?: CardTypes[],
+  cardSuperTypes?: CardSuperTypes[]
 ): Promise<GathererCard[]> {
-  const res = await fetch(
-    `https://api.magicthegathering.io/v1/cards?name=${name}&contains=imageUrl|multiverseid`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  let url = `https://api.magicthegathering.io/v1/cards?name=${name}&contains=imageUrl|multiverseid`;
+  if (cardTypeFilters) {
+    url = url + '&types=';
+    for (let _i = 0; _i < cardTypeFilters.length; _i++) {
+      url = url + cardTypeFilters[_i];
+      if (_i < cardTypeFilters.length - 1) url = url + ',';
     }
-  ).catch((e) => {
+  }
+
+  if (cardSuperTypes) {
+    url = url + '&supertypes=';
+    for (let _i = 0; _i < cardSuperTypes.length; _i++) {
+      url = url + cardSuperTypes[_i];
+      if (_i < cardSuperTypes.length - 1) url = url + ',';
+    }
+  }
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).catch((e) => {
     console.log(JSON.stringify(e));
     throw e;
   });
