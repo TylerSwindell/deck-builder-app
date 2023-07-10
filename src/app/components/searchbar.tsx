@@ -1,5 +1,6 @@
 import { fetchCardsByName } from '@/app/functions/cardFunctions';
 import {
+  CardRarityTypes,
   CardSuperTypes,
   CardTypes,
   GathererCard,
@@ -10,12 +11,14 @@ interface Props {
   callback: (card: GathererCard) => void;
   cardTypeFilters?: CardTypes[];
   cardSuperTypes?: CardSuperTypes[];
+  cardRarities?: CardRarityTypes[];
 }
 
 const SearchBar: React.FC<Props> = ({
   callback,
   cardTypeFilters,
   cardSuperTypes,
+  cardRarities,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<GathererCard[]>(
@@ -40,7 +43,8 @@ const SearchBar: React.FC<Props> = ({
           let res = await fetchCardsByName(
             searchTerm,
             cardTypeFilters,
-            cardSuperTypes
+            cardSuperTypes,
+            cardRarities
           );
 
           setSearchResults(res);

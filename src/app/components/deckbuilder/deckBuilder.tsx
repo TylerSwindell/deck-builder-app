@@ -6,6 +6,7 @@ import SearchBar from '../searchbar';
 import { GathererCard } from '@/types/gatherer';
 import CardList from './cardList';
 import CardTooltip from '../cardTooltip';
+import { TooltipWrapper } from './components';
 
 type DeckBuilderProps = {
   formats: Format[];
@@ -33,13 +34,20 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   const [commander, setCommander] = useState<GathererCard | null>(
     null
   );
-  const [oathbreakerId, setOathbreakerId] = useState<string>('');
-  const [signatureSpellId, setSignatureSpellId] =
-    useState<string>('');
+  const [oathbreaker, setOathbreaker] = useState<GathererCard | null>(
+    null
+  );
+  const [signatureSpell, setSignatureSpell] =
+    useState<GathererCard | null>(null);
 
-  const addDeck = useCallback(async () => {
-    console.log(`${location.origin}/decks`);
+  const addDeck = async () => {
     const commanderId = commander ? commander.multiverseid : null;
+    const oathbreakerId = oathbreaker
+      ? oathbreaker.multiverseid
+      : null;
+    const signatureSpellId = signatureSpell
+      ? signatureSpell.multiverseid
+      : null;
     const res = await fetch(`${location.origin}/decks/api`, {
       method: 'POST',
       body: JSON.stringify({
@@ -52,20 +60,12 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           selectedFormat,
         },
         selectedColors,
-        selectedCards,
+        cardsByQuantity,
       }),
     });
     if (res.status === 201 || res.status === 200) alert('Added!');
     else console.log(`error: ${JSON.stringify(res)}`);
-  }, [
-    selectedFormat,
-    selectedColors,
-    deckName,
-    deckNotes,
-    commander,
-    oathbreakerId,
-    signatureSpellId,
-  ]);
+  };
 
   function removeCard(multiverseid: number): void {
     setSelectedCards((prev) => {
@@ -83,6 +83,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   const handleFormatChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
+    setCommander(null);
     setSelectedFormat(Number(event.target.value));
   };
 
@@ -121,18 +122,6 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setDeckNotes(event.target.value);
-  };
-
-  const handleOathbreakerIdChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setOathbreakerId(event.target.value);
-  };
-
-  const handleSignatureSpellIdChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setSignatureSpellId(event.target.value);
   };
 
   const formatOptions = formats.map((format) => (
@@ -219,17 +208,14 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
             >
               Commander
             </label>
-            <div className="bg-white rounded p-4 mt-1">
-              <div className="grid grid-cols-1 gap-4">
-                <div className="flex items-center">
-                  {commander && (
-                    <CardTooltip imageUrl={`${commander?.imageUrl}`}>
-                      <span>{commander.name}</span>
-                    </CardTooltip>
-                  )}
-                </div>
-              </div>
-            </div>
+            <TooltipWrapper>
+              {commander && (
+                <CardTooltip imageUrl={`${commander?.imageUrl}`}>
+                  <span>{commander.name}</span>
+                </CardTooltip>
+              )}
+            </TooltipWrapper>
+
             <SearchBar
               callback={(card: GathererCard) => {
                 setCommander(card);
@@ -239,39 +225,76 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
             />
           </div>
         )}
+        {selectedFormat === 2 && (
+          <div className="mb-4">
+            <label
+              htmlFor="commanderId"
+              className="block text-sm font-medium text-gray-300"
+            >
+              Commander
+            </label>
+            <TooltipWrapper>
+              {commander && (
+                <CardTooltip imageUrl={`${commander?.imageUrl}`}>
+                  <span>{commander.name}</span>
+                </CardTooltip>
+              )}
+            </TooltipWrapper>
+            <SearchBar
+              callback={(card: GathererCard) => {
+                setCommander(card);
+              }}
+              cardTypeFilters={['Creature']}
+              cardRarities={['Uncommon']}
+            />
+          </div>
+        )}
+
         {selectedFormat === 4 && (
           <>
             <div className="mb-4">
               <label
-                htmlFor="oathbreakerId"
+                htmlFor="commanderId"
                 className="block text-sm font-medium text-gray-300"
               >
-                Oathbreaker ID
+                Oathbreaker
               </label>
-              <input
-                id="oathbreakerId"
-                type="text"
-                value={oathbreakerId}
-                onChange={handleOathbreakerIdChange}
-                maxLength={100}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              <TooltipWrapper>
+                {oathbreaker && (
+                  <CardTooltip imageUrl={`${oathbreaker?.imageUrl}`}>
+                    <span>{oathbreaker.name}</span>
+                  </CardTooltip>
+                )}
+              </TooltipWrapper>
+              <SearchBar
+                callback={(card: GathererCard) => {
+                  setOathbreaker(card);
+                }}
+                cardTypeFilters={['Planeswalker']}
               />
             </div>
 
             <div className="mb-4">
               <label
-                htmlFor="signatureSpellId"
+                htmlFor="signatureSpell"
                 className="block text-sm font-medium text-gray-300"
               >
-                Signature Spell ID
+                Signature Spell
               </label>
-              <input
-                id="signatureSpellId"
-                type="text"
-                value={signatureSpellId}
-                onChange={handleSignatureSpellIdChange}
-                maxLength={100}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              <TooltipWrapper>
+                {signatureSpell && (
+                  <CardTooltip
+                    imageUrl={`${signatureSpell?.imageUrl}`}
+                  >
+                    <span>{signatureSpell.name}</span>
+                  </CardTooltip>
+                )}
+              </TooltipWrapper>
+              <SearchBar
+                callback={(card: GathererCard) => {
+                  setSignatureSpell(card);
+                }}
+                cardTypeFilters={['Instant', 'Sorcery']}
               />
             </div>
           </>
@@ -296,6 +319,12 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           <SearchBar callback={handleSelectedCardChange} />
         </div>
         <div>
+          <label
+            htmlFor="deckList"
+            className="block text-sm font-medium text-gray-300"
+          >
+            Deck List
+          </label>
           <CardList
             items={selectedCards}
             cardsByQuantity={cardsByQuantity}

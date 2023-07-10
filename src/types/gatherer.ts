@@ -64,4 +64,12 @@ export type CardSuperTypes =
   | 'World'
   | 'Ongoing';
 
+export type CardRarityTypes =
+  | 'Common'
+  | 'Uncommon'
+  | 'Rare'
+  | 'Mythic Rare'
+  | 'Special'
+  | 'Basic Land';
+
 export const GathererUrl = 'http://api.magicthegathering.io/v1/';

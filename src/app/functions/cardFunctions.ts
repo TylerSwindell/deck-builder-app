@@ -1,4 +1,5 @@
 import {
+  CardRarityTypes,
   CardSuperTypes,
   CardTypes,
   GathererCard,
@@ -36,14 +37,15 @@ function filterDuplicateCards(cards: GathererCard[]): GathererCard[] {
 export async function fetchCardsByName(
   name: string,
   cardTypeFilters?: CardTypes[],
-  cardSuperTypes?: CardSuperTypes[]
+  cardSuperTypes?: CardSuperTypes[],
+  cardRarities?: CardRarityTypes[]
 ): Promise<GathererCard[]> {
   let url = `https://api.magicthegathering.io/v1/cards?name=${name}&contains=imageUrl|multiverseid`;
   if (cardTypeFilters) {
     url = url + '&types=';
     for (let _i = 0; _i < cardTypeFilters.length; _i++) {
       url = url + cardTypeFilters[_i];
-      if (_i < cardTypeFilters.length - 1) url = url + ',';
+      if (_i < cardTypeFilters.length - 1) url = url + '|';
     }
   }
 
@@ -54,6 +56,15 @@ export async function fetchCardsByName(
       if (_i < cardSuperTypes.length - 1) url = url + ',';
     }
   }
+
+  if (cardRarities) {
+    url = url + '&rarity=';
+    for (let _i = 0; _i < cardRarities.length; _i++) {
+      url = url + cardRarities[_i];
+      if (_i < cardRarities.length - 1) url = url + '|';
+    }
+  }
+
   const res = await fetch(url, {
     method: 'GET',
     headers: {
@@ -77,4 +88,29 @@ export async function getCardsInDeck(
 
   const cards = await Promise.all(fetchPromises);
   return cards;
+}
+
+export function mapCardsByQuantityToAdd(
+  arr: { [multiverseid: number]: number }[],
+  deckId: number,
+  versionId: string
+): {
+  deck_id: number;
+  gatherer_id?: string | null;
+  id?: number;
+  multiverse_id: number;
+  version_id: string;
+  number_of_copies: number | null;
+}[] {
+  return arr.map((item) => {
+    const multiverse_id = Object.keys(item)[0];
+    const number_of_copies = item[+multiverse_id];
+
+    return {
+      multiverse_id: Number(multiverse_id),
+      number_of_copies: number_of_copies || null,
+      deck_id: deckId,
+      version_id: versionId,
+    };
+  });
 }
