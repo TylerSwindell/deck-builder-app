@@ -1,12 +1,11 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { Database } from '@/types/supabase';
+import { Database, Deck } from '@/types/supabase';
 import { GathererCard, GathererUrl } from '@/types/gatherer';
 import { mapCardsByQuantityToAdd } from '@/app/functions/cardFunctions';
 
 export async function POST(request: Request) {
-  console.log(`>>>${JSON.stringify(request)}`);
   try {
     const { deck, selectedColors, cardsByQuantity } =
       await request.json();
@@ -59,12 +58,10 @@ export async function POST(request: Request) {
           .from('decks_cards')
           .insert(cardsToAdd);
         if (cardsError) throw cardsError;
-
-        console.log(cardsData);
       }
     }
 
-    return NextResponse.json(newDeck);
+    return NextResponse.json(newDeck[0]);
   } catch (e: any) {
     return new Response(JSON.stringify(e), { status: 401 });
   }

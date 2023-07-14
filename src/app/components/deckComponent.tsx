@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 import { getCardsInDeck } from '../functions/cardFunctions';
 import { GathererCard } from '@/types/gatherer';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import DeckDeleteButton from './deckDeleteButton';
 
 const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -63,7 +65,8 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
               href={`/decks/${deck.id}/edit`}
             >
               Edit
-            </Link>
+            </Link>{' '}
+            <DeckDeleteButton deckId={id} />
           </div>
         )}
         <p className="text-sm sm:text-base">
