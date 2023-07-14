@@ -303,6 +303,12 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      delete_deck: {
+        Args: {
+          deck_id: number;
+        };
+        Returns: undefined;
+      };
       get_deck_cards: {
         Args: {
           deck_id_param: number;
