@@ -1,5 +1,5 @@
 'use client';
-import { Color, Format } from '@/types/supabase';
+import { Color, Deck, Format } from '@/types/supabase';
 import React, { useCallback, useMemo, useState } from 'react';
 import ColorSelector from './colorSelector';
 import SearchBar from '../searchbar';
@@ -7,16 +7,24 @@ import { GathererCard } from '@/types/gatherer';
 import CardList from './cardList';
 import CardTooltip from '../cardTooltip';
 import { TooltipWrapper } from './components';
+import { useRouter } from 'next/navigation';
 
 type DeckBuilderProps = {
   formats: Format[];
   colors: Color[];
 };
 
+/**
+ * Todo: make this component modular so it can be user for editting decks as well
+ * @param  formats The types of formas the player can choose.
+ * @param colors The mtg color wheel.
+ */
 const DeckBuilder: React.FC<DeckBuilderProps> = ({
   formats,
   colors,
 }) => {
+  const router = useRouter();
+
   const [selectedFormat, setSelectedFormat] = useState<number | null>(
     null
   );
@@ -63,8 +71,11 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
         cardsByQuantity,
       }),
     });
-    if (res.status === 201 || res.status === 200) alert('Added!');
-    else console.log(`error: ${JSON.stringify(res)}`);
+    if (res.status === 201 || res.status === 200) {
+      const newDeck: Deck = await res.json();
+      console.log(newDeck);
+      router.push(`/decks/${newDeck.id}`);
+    } else console.log(`error: ${JSON.stringify(res)}`);
   };
 
   function removeCard(multiverseid: number): void {
