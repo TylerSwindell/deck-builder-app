@@ -32,7 +32,6 @@ export async function POST(request: Request) {
 
     if (newDeck[0]) {
       const { id } = newDeck[0];
-      console.log(id);
       const { data: version, error: versionError } = await supabase
         .from('deck_version')
         .select()
@@ -46,7 +45,6 @@ export async function POST(request: Request) {
         .from('decks_colors')
         .insert(colorArray);
       if (colorsError) throw colorsError;
-      console.log(version);
       if (version !== null) {
         const cardsToAdd = mapCardsByQuantityToAdd(
           cardsByQuantity,

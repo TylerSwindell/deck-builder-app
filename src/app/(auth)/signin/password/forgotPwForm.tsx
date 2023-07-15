@@ -2,15 +2,13 @@
 import ErrorText from '@/app/components/errors/ErrorText';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AuthError } from '@supabase/supabase-js';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 const ForgotPwForm = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState<AuthError | null>(null);
   const [isSent, setIsSent] = useState(false);
   const supabase = createClientComponentClient();
-  const router = useRouter();
 
   const handleClick = async () => {
     setError(null);

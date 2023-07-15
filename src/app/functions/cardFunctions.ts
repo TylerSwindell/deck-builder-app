@@ -9,9 +9,9 @@ export async function fetchCard(id: number): Promise<GathererCard> {
   const res = await fetch(
     `http://api.magicthegathering.io/v1/cards/${id}`
   ).catch((e) => {
-    console.log(JSON.stringify(e));
     throw e;
   });
+  if (res.status === 500) throw '500 error on card fetch request';
   const card = await res.json();
   return card.card;
 }

@@ -41,6 +41,7 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const gathererCards = await getCardsInDeck(
     cards?.map((card) => card.multiverse_id) || []
   );
+  console.log(gathererCards);
 
   let { data: format, error: formatError } = await supabase
     .from('decks_formats')

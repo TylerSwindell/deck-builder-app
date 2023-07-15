@@ -1,7 +1,10 @@
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const DeckDeleteButton = ({ deckId }: { deckId: number }) => {
+  const router = useRouter();
+
   const deleteHandler = async () => {
     const res = await fetch(
       `${location.origin}/decks/api/${deckId}`,
@@ -10,7 +13,8 @@ const DeckDeleteButton = ({ deckId }: { deckId: number }) => {
       }
     );
     if (res.status === 204 || res.status === 200) {
-      alert('deleted');
+      router.push(`${location.origin}/dashboard`);
+      router.refresh();
     } else console.log(`error: ${JSON.stringify(res)}`);
   };
 
