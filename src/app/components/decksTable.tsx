@@ -81,6 +81,7 @@ const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
               )}
             </th>
             <th className="px-4 py-2 cursor-pointer">Colors</th>
+            <th className="px-4 py-2 cursor-pointer">User</th>
           </tr>
         </thead>
         <tbody>
@@ -98,8 +99,7 @@ const DecksTable: React.FC<DecksTableProps> = ({ decks }) => {
                     return prev + ', ' + current;
                   }, '')}
               </td>
-
-              {/* Render additional columns */}
+              <td>{deck.user_id}</td>
             </tr>
           ))}
         </tbody>
