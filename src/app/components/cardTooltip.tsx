@@ -1,3 +1,4 @@
+'use client';
 import React, { ReactNode, useLayoutEffect, useState } from 'react';
 
 interface TooltipProps {
@@ -30,6 +31,7 @@ const CardTooltip: React.FC<TooltipProps> = ({
 
   useLayoutEffect(() => {
     loadImage(setImageHeight, imageUrl);
+    console.log(imageHeight);
   }, []);
   const handleMouseEnter = () => {
     setIsTooltipVisible(true);
@@ -46,20 +48,23 @@ const CardTooltip: React.FC<TooltipProps> = ({
       onMouseLeave={handleMouseLeave}
     >
       {children}
-      {isTooltipVisible && (
-        <div className="absolute z-10 flex items-center">
-          <img
-            src={imageUrl}
-            alt="Card Image Not Found"
-            className="absolute z-10 bg-white shadow p-2 rounded"
-            style={{
-              position: 'relative',
-              bottom: `${imageHeight - 70}px`,
-              maxWidth: '160px',
-            }}
-          />
-        </div>
-      )}
+
+      <div
+        className={`absolute z-10 flex items-center ${
+          isTooltipVisible ? '' : 'hidden'
+        }`}
+      >
+        <img
+          src={imageUrl}
+          alt="Card Image Not Found"
+          className="absolute z-10 bg-white shadow p-2 rounded"
+          style={{
+            position: 'relative',
+            bottom: `${240}px`,
+            maxWidth: '160px',
+          }}
+        />
+      </div>
     </div>
   );
 };

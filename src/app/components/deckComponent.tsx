@@ -7,6 +7,7 @@ import { GathererCard } from '@/types/gatherer';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import DeckDeleteButton from './deckDeleteButton';
+import CardTooltip from './cardTooltip';
 
 const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -101,7 +102,11 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
         <h3 className="text-lg sm:text-xl font-bold mt-4">Cards:</h3>
         <ul className="list-disc ml-8">
           {gathererCards.map((card: GathererCard) => (
-            <li key={card.id}>{card.name}</li>
+            <li>
+              <CardTooltip key={card.id} imageUrl={card.imageUrl}>
+                {card.name}
+              </CardTooltip>
+            </li>
           ))}
         </ul>
       </div>
