@@ -12,8 +12,8 @@ export async function fetchCard(id: number): Promise<GathererCard> {
     throw e;
   });
   if (res.status === 500) throw '500 error on card fetch request';
-  const card = await res.json();
-  return card.card;
+  const cardRes: { card: GathererCard } = await res.json();
+  return cardRes.card;
 }
 
 function filterDuplicateCards(cards: GathererCard[]): GathererCard[] {
@@ -81,13 +81,21 @@ export async function fetchCardsByName(
 export async function getCardsInDeck(
   ids: number[]
 ): Promise<GathererCard[]> {
-  const fetchPromises = ids.map(async (id) => {
-    const card = await fetchCard(id);
-    return card;
-  });
+  let idString = '';
+  for (let i = 0; i < ids.length; i++) {
+    idString += ids[i];
+    if (i < ids.length - 1) idString += '|';
+  }
 
-  const cards = await Promise.all(fetchPromises);
-  return cards;
+  const res = await fetch(
+    `http://api.magicthegathering.io/v1/cards?multiverseid=${idString}`
+  ).catch((e) => {
+    throw e;
+  });
+  if (res.status === 500) throw '500 error on card fetch request';
+  const cardsRes: { cards: GathererCard[] } = await res.json();
+
+  return cardsRes.cards;
 }
 
 export function mapCardsByQuantityToAdd(
