@@ -73,7 +73,6 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
     });
     if (res.status === 201 || res.status === 200) {
       const newDeck: Deck = await res.json();
-      console.log(newDeck);
       router.push(`/decks/${newDeck.id}`);
     } else console.log(`error: ${JSON.stringify(res)}`);
   };
