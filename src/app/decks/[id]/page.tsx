@@ -1,4 +1,4 @@
-import DeckComponent from '@/app/components/deckComponent';
+import DeckComponent from '@/app/components/deck/deckComponent';
 
 const DeckPage = ({ params }: { params: { id: number } }) => {
   return (

@@ -303,6 +303,19 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      compare_decks: {
+        Args: {
+          left_id: number;
+          right_id: number;
+        };
+        Returns: {
+          multiverse_id: number;
+          left_deck_id: number;
+          right_deck_id: number;
+          right_quantity: number;
+          left_quantity: number;
+        }[];
+      };
       delete_deck: {
         Args: {
           deck_id: number;

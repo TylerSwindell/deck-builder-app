@@ -57,6 +57,11 @@ const AppHeaderMenu = () => {
               </Link>
             </li>
             <li className="pl-2 pt-2 pb-2">
+              <Link className="jaceNeonText" href={'/decks/analyze'}>
+                Analyze
+              </Link>
+            </li>
+            <li className="pl-2 pt-2 pb-2">
               <Link className="jaceNeonText" href={'/decks'}>
                 Decks
               </Link>

@@ -81,10 +81,16 @@ export async function fetchCardsByName(
 export async function getCardsInDeck(
   ids: number[]
 ): Promise<GathererCard[]> {
+  const uniqueSet: Set<number> = new Set();
+
+  // Loop through the input array and add each number to the Set
+  for (const num of ids) {
+    uniqueSet.add(num);
+  }
   let idString = '';
-  for (let i = 0; i < ids.length; i++) {
-    idString += ids[i];
-    if (i < ids.length - 1) idString += '|';
+  for (let i = 0; i < Array.from(uniqueSet).length; i++) {
+    idString += Array.from(uniqueSet)[i];
+    if (i < Array.from(uniqueSet).length - 1) idString += '|';
   }
 
   const res = await fetch(
@@ -92,7 +98,8 @@ export async function getCardsInDeck(
   ).catch((e) => {
     throw e;
   });
-  if (res.status === 500) throw '500 error on card fetch request';
+  if (res.status === 500 || res.status === 503)
+    throw '500 error on card fetch request';
   const cardsRes: { cards: GathererCard[] } = await res.json();
 
   return cardsRes.cards;

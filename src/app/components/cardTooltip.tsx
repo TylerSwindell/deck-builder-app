@@ -50,7 +50,7 @@ const CardTooltip: React.FC<TooltipProps> = ({
       {children}
 
       <div
-        className={`absolute z-10 flex items-center ${
+        className={`absolute z-10 flex items-center bottom-5 ${
           isTooltipVisible ? '' : 'hidden'
         }`}
       >
@@ -60,7 +60,6 @@ const CardTooltip: React.FC<TooltipProps> = ({
           className="absolute z-10 bg-white shadow p-2 rounded"
           style={{
             position: 'relative',
-            bottom: `${240}px`,
             maxWidth: '160px',
           }}
         />
