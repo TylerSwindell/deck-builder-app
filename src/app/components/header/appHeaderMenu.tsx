@@ -19,6 +19,11 @@ const AppHeaderMenu = () => {
             </Link>
           </li>
           <li>
+            <Link className="jaceNeonText" href={'/decks/analyze'}>
+              Analyze
+            </Link>
+          </li>
+          <li>
             <Link className="jaceNeonText" href={'/decks'}>
               Decks
             </Link>

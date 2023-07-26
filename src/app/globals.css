@@ -38,6 +38,7 @@
 
 .checkbox-black {
   --checkbox-color: #d2c9c6; /* Black color */
+  /* black var #686463 */
 }
 
 .checkbox-blue {
@@ -45,7 +46,7 @@
 }
 
 .checkbox-colorless {
-  --checkbox-color: #cec3c1; /* Blue color */
+  --checkbox-color: #cec3c1; /* Grey color */
 }
 /* Default checkbox styles */
 .form-checkbox {
