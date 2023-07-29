@@ -1,10 +1,9 @@
 'use client';
 
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import DeckVersionFilter from './deckVersionFilter';
 import { GathererCard } from '@/types/gatherer';
 import CardTooltip from '../cardTooltip';
-import { json } from 'stream/consumers';
 
 type DeckListProps = {
   versions:

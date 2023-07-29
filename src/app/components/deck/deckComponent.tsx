@@ -1,19 +1,12 @@
-import React from 'react';
-import {
-  Deck,
-  Format,
-  Card,
-  Database,
-} from '../../../types/supabase'; // Import the defined types
+import { Database } from '../../../types/supabase'; // Import the defined types
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { getCardsInDeck } from '../../functions/cardFunctions';
 import { GathererCard } from '@/types/gatherer';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import DeckDeleteButton from '../deckDeleteButton';
-import CardTooltip from '../cardTooltip';
 import DeckList from './deckList';
+import Logger from 'ts-logger-node';
 
 const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -59,8 +52,19 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     .eq('id', deck?.deck_format)
     .single();
 
-  if (error || formatError) {
+  if (error || formatError || versionsError) {
+    Logger.print(JSON.stringify(error), 'ERROR');
     throw error;
+  }
+
+  if (formatError) {
+    Logger.print(JSON.stringify(formatError), 'ERROR');
+    throw formatError;
+  }
+
+  if (versionsError) {
+    Logger.print(JSON.stringify(versionsError), 'ERROR');
+    throw versionsError;
   }
 
   let deckByCardsByVersion: {
@@ -71,6 +75,7 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
       gathererCard: GathererCard | undefined;
     }[];
   } = {};
+
   if (versions) {
     versions?.forEach((version) => {
       let versionCards = cards
@@ -79,7 +84,6 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
           let _gathererCard = gathererCards.find(
             (_card) => _card.multiverseid == card.multiverse_id
           );
-          console.log(`>>>${JSON.stringify(_gathererCard)}`);
           return {
             id: card.id,
             multiverse_id: card.multiverse_id,
@@ -90,6 +94,7 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
       deckByCardsByVersion[version.id] = versionCards;
     });
   }
+
   if (deck && format && gathererCards) {
     return (
       <div className="p-4 bg-gray-100 rounded shadow-md sm:p-8">
