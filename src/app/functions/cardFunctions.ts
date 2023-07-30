@@ -3,7 +3,8 @@ import {
   CardSuperTypes,
   CardTypes,
   GathererCard,
-} from '@/types/gatherer';
+} from "@/types/gatherer";
+import Logger from "ts-logger-node";
 
 export async function fetchCard(id: number): Promise<GathererCard> {
   const res = await fetch(
@@ -11,7 +12,7 @@ export async function fetchCard(id: number): Promise<GathererCard> {
   ).catch((e) => {
     throw e;
   });
-  if (res.status === 500) throw '500 error on card fetch request';
+  if (res.status === 500) throw "500 error on card fetch request";
   const cardRes: { card: GathererCard } = await res.json();
   return cardRes.card;
 }
@@ -42,55 +43,53 @@ export async function fetchCardsByName(
 ): Promise<GathererCard[]> {
   let url = `https://api.magicthegathering.io/v1/cards?name=${name}&contains=imageUrl|multiverseid`;
   if (cardTypeFilters) {
-    url = url + '&types=';
+    url = url + "&types=";
     for (let _i = 0; _i < cardTypeFilters.length; _i++) {
       url = url + cardTypeFilters[_i];
-      if (_i < cardTypeFilters.length - 1) url = url + '|';
+      if (_i < cardTypeFilters.length - 1) url = url + "|";
     }
   }
 
   if (cardSuperTypes) {
-    url = url + '&supertypes=';
+    url = url + "&supertypes=";
     for (let _i = 0; _i < cardSuperTypes.length; _i++) {
       url = url + cardSuperTypes[_i];
-      if (_i < cardSuperTypes.length - 1) url = url + ',';
+      if (_i < cardSuperTypes.length - 1) url = url + ",";
     }
   }
 
   if (cardRarities) {
-    url = url + '&rarity=';
+    url = url + "&rarity=";
     for (let _i = 0; _i < cardRarities.length; _i++) {
       url = url + cardRarities[_i];
-      if (_i < cardRarities.length - 1) url = url + '|';
+      if (_i < cardRarities.length - 1) url = url + "|";
     }
   }
 
   const res = await fetch(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   }).catch((e) => {
-    console.log(JSON.stringify(e));
+    Logger.print(JSON.stringify(e), "ERROR");
     throw e;
   });
   const card = await res.json();
   return filterDuplicateCards(card.cards);
 }
 
-export async function getCardsInDeck(
-  ids: number[]
-): Promise<GathererCard[]> {
+export async function getCardsInDeck(ids: number[]): Promise<GathererCard[]> {
   const uniqueSet: Set<number> = new Set();
 
   // Loop through the input array and add each number to the Set
   for (const num of ids) {
     uniqueSet.add(num);
   }
-  let idString = '';
+  let idString = "";
   for (let i = 0; i < Array.from(uniqueSet).length; i++) {
     idString += Array.from(uniqueSet)[i];
-    if (i < Array.from(uniqueSet).length - 1) idString += '|';
+    if (i < Array.from(uniqueSet).length - 1) idString += "|";
   }
 
   const res = await fetch(
@@ -99,7 +98,7 @@ export async function getCardsInDeck(
     throw e;
   });
   if (res.status === 500 || res.status === 503)
-    throw '500 error on card fetch request';
+    throw "500 error on card fetch request";
   const cardsRes: { cards: GathererCard[] } = await res.json();
 
   return cardsRes.cards;
