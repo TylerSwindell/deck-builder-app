@@ -7,6 +7,7 @@ import Link from 'next/link';
 import DeckDeleteButton from '../deckDeleteButton';
 import DeckList from './deckList';
 import Logger from 'ts-logger-node';
+import VictoryTracker from './VictoryTracker';
 
 const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -113,6 +114,7 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
             <DeckDeleteButton deckId={id} />
           </div>
         )}
+
         <p className="text-sm sm:text-base">
           <span className="font-bold">Deck ID:</span> {deck.id}
         </p>

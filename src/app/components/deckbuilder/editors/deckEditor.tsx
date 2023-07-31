@@ -2,14 +2,18 @@
 
 import { GathererCard } from '@/types/gatherer';
 import { SetStateAction, useState } from 'react';
-import CardList from './cardList';
-import SearchBar from '../searchbar';
+import CardList from '../cardList';
+import SearchBar from '../../searchbar';
 import { useRouter } from 'next/navigation';
+import WinsAndLossesEditor from './winsAndLossEditor';
 
 type DeckEditorProps = {
   cards: GathererCard[];
   cardsByQuantity: { [multverseid: number]: number }[];
   deckId: number;
+  wins: number; // New property: number of wins for the deck
+  losses: number; // New property: number of losses for the deck
+  versionId: string; // New property: a string identifier for the version of the deck
 };
 
 export const DeckEditor: React.FC<DeckEditorProps> = (props) => {

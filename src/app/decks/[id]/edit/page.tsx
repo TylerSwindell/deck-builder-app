@@ -1,4 +1,4 @@
-import DeckEditor from '@/app/components/deckbuilder/deckEditor';
+import DeckEditor from '@/app/components/deckbuilder/editors/deckEditor';
 import { getCardsInDeck } from '@/app/functions/cardFunctions';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
@@ -14,6 +14,8 @@ const EditPage = async ({ params }: { params: { id: number } }) => {
        id, 
        deck_id, 
        created_at,
+       wins,
+       losses,
        decks_cards (           
         deck_id,
         gatherer_id,
@@ -49,6 +51,9 @@ const EditPage = async ({ params }: { params: { id: number } }) => {
           cards={gathererCards}
           cardsByQuantity={gathererCardsByQuantity}
           deckId={params.id}
+          versionId={decksByVersion[0].id || ''}
+          wins={decksByVersion[0].wins}
+          losses={decksByVersion[0].losses}
         />
       </>
     );
