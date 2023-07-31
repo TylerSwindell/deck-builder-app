@@ -24,6 +24,7 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
       comander_id,
       deck_format,
       id,
+      notes,
       name,
       oathbreaker_id,
       signature_spell_id             
@@ -138,6 +139,9 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
         <p className="text-sm sm:text-base">
           <span className="font-bold">Allow Rares:</span>{' '}
           {format.allow_rares ? 'Yes' : 'No'}
+        </p>
+        <p className="text-sm sm:text-base">
+          <span className="font-bold">Notes:</span> {deck.notes}
         </p>
         <h3 className="text-lg sm:text-xl font-bold mt-4">Cards:</h3>
 
