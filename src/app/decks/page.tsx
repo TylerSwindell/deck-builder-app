@@ -3,6 +3,7 @@ import DecksTable from '../components/decksTable';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase';
 import { cookies } from 'next/headers';
+import Logger from 'ts-logger-node';
 
 const DecksPage = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -22,6 +23,9 @@ const DecksPage = async () => {
               decks_colors ( * )
               `
     );
+
+  if (deckError)
+    Logger.print(`${JSON.stringify(deckError)}`, 'ERROR');
 
   if (decks === null) return <DecksTable decks={[]} />;
 

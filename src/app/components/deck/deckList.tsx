@@ -40,9 +40,8 @@ const DeckList: React.FC<DeckListProps> = ({ versions, deck }) => {
       {deckVersion && (
         <ul className="list-disc ml-8">
           {deck[deckVersion].map((card) => (
-            <li>
+            <li key={card.id}>
               <CardTooltip
-                key={card.id}
                 imageUrl={card.gathererCard?.imageUrl || ''}
               >
                 {card.gathererCard?.name}

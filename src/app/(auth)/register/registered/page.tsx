@@ -8,8 +8,8 @@ const Registered = async () => {
   return (
     <div className="m-auto">
       <p>
-        You're signed up, you just need to check your email and
-        confirm it's correct
+        You&apos;re signed up, you just need to check your email and
+        confirm it&apos;s correct
       </p>
     </div>
   );

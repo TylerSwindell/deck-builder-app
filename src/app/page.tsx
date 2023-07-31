@@ -34,16 +34,16 @@ export default async function Home() {
           your creations.
         </p>
         <p className="md:text-lg sm:text-sm mb-8">
-          SpellBook's innovative features empower you to visualize the
-          interplay between cards in your deck like never before. With
-          a single click, witness the magical connections and discover
-          the intricate web of possibilities that will guide your
-          deckbuilding journey. Uncover hidden synergies, combos, and
-          interactions, enabling you to optimize your deck to
-          perfection.
+          SpellBook&apos;s innovative features empower you to
+          visualize the interplay between cards in your deck like
+          never before. With a single click, witness the magical
+          connections and discover the intricate web of possibilities
+          that will guide your deckbuilding journey. Uncover hidden
+          synergies, combos, and interactions, enabling you to
+          optimize your deck to perfection.
         </p>
         <p className="md:text-lg sm:text-sm mb-8">
-          Efficiency becomes your steadfast ally as SpellBook's
+          Efficiency becomes your steadfast ally as SpellBook&apos;s
           intelligent algorithms swiftly analyze your deck, providing
           invaluable recommendations to enhance its strengths and
           address any weaknesses. From tribal synergies to impeccable
@@ -56,9 +56,9 @@ export default async function Home() {
           thriving community of fellow deck builders. Share your
           creations, seek advice, and engage in spirited discussions
           with like-minded players who share your unwavering passion
-          for Magic the Gathering. Together, you'll unlock the true
-          essence of every card and ascend to unparalleled heights of
-          gameplay.
+          for Magic the Gathering. Together, you&apos;ll unlock the
+          true essence of every card and ascend to unparalleled
+          heights of gameplay.
         </p>
         <p className="md:text-lg sm:text-sm">
           Experience the enchantment of SpellBook and embark on an

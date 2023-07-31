@@ -40,7 +40,7 @@ const Dashboard = async () => {
         ) : (
           <div className="grid grid-cols-3 gap-4">
             {decks.map((deck: Deck) => (
-              <div className="p-4 border rounded-md">
+              <div key={deck.id} className="p-4 border rounded-md">
                 <h2 className="text-lg text-white font-bold mb-2">
                   {deck.name || 'Untitled Deck'}
                 </h2>
