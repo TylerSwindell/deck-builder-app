@@ -11,7 +11,7 @@ const Loader = () => {
       <Sphere color="grey" />
       <Sphere color="black" />
       <Sphere color="white" />
-      <p className="text-white">Loading...</p>
+      <p className="text-white animate-pulse">Loading...</p>
     </div>
   );
 };

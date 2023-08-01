@@ -38,7 +38,8 @@ const DeckList: React.FC<DeckListProps> = ({ versions, deck }) => {
   );
 
   useEffect(() => {
-    console.log(`>>>${JSON.stringify(selectedVersion)}`);
+    if (deckVersion)
+      console.log(`>>>${JSON.stringify(deck[deckVersion])}`);
   }, [selectedVersion]);
 
   const updateWinsAndLossesCallback = (
@@ -81,11 +82,18 @@ const DeckList: React.FC<DeckListProps> = ({ versions, deck }) => {
         <ul className="list-disc ml-8">
           {deck[deckVersion].map((card) => (
             <li key={card.id}>
-              <CardTooltip
-                imageUrl={card.gathererCard?.imageUrl || ''}
-              >
-                {card.gathererCard?.name}
-              </CardTooltip>
+              <div>
+                <CardTooltip
+                  imageUrl={card.gathererCard?.imageUrl || ''}
+                >
+                  <p className="underline	">
+                    {card.gathererCard?.name}
+                  </p>{' '}
+                </CardTooltip>{' '}
+                <p className="inline-block">
+                  x{card.number_of_copies}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
