@@ -1,12 +1,16 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import DeckVersionFilter from './deckVersionFilter';
-import { GathererCard } from '@/types/gatherer';
-import CardTooltip from '../cardTooltip';
-import VictoryTracker from './VictoryTracker';
+import { use, useEffect, useState } from "react";
+import DeckVersionFilter from "./deckVersionFilter";
+import { GathererCard } from "@/types/gatherer";
+import CardTooltip from "../cardTooltip";
+import VictoryTracker from "./VictoryTracker";
+import DeckForkButton from "../utilities/DeckForkButton";
 
 type DeckListProps = {
+  deckId: number;
+  userId: string | null;
+  deckUserId: string | null;
   versions:
     | {
         created_at: string | null;
@@ -26,7 +30,13 @@ type DeckListProps = {
   };
 };
 
-const DeckList: React.FC<DeckListProps> = ({ versions, deck }) => {
+const DeckList: React.FC<DeckListProps> = ({
+  versions,
+  deck,
+  userId,
+  deckUserId,
+  deckId,
+}) => {
   const [deckVersionArr, setDeckVersionArr] = useState(
     versions || []
   );
@@ -64,6 +74,15 @@ const DeckList: React.FC<DeckListProps> = ({ versions, deck }) => {
 
   return (
     <div>
+      {userId && userId !== deckUserId && deckVersion && (
+        <div>
+          <DeckForkButton
+            deckId={deckId}
+            versionId={deckVersion}
+            userId={userId}
+          />
+        </div>
+      )}
       <DeckVersionFilter
         versions={versions}
         setDeckVersion={setDeckVersion}
@@ -84,12 +103,12 @@ const DeckList: React.FC<DeckListProps> = ({ versions, deck }) => {
             <li key={card.id}>
               <div>
                 <CardTooltip
-                  imageUrl={card.gathererCard?.imageUrl || ''}
+                  imageUrl={card.gathererCard?.imageUrl || ""}
                 >
                   <p className="underline	">
                     {card.gathererCard?.name}
-                  </p>{' '}
-                </CardTooltip>{' '}
+                  </p>{" "}
+                </CardTooltip>{" "}
                 <p className="inline-block">
                   x{card.number_of_copies}
                 </p>

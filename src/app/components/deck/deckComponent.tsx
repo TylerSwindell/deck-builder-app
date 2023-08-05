@@ -4,10 +4,9 @@ import { cookies } from "next/headers";
 import { getCardsInDeck } from "../../functions/cardFunctions";
 import { GathererCard } from "@/types/gatherer";
 import Link from "next/link";
-import DeckDeleteButton from "../deckDeleteButton";
+import DeckDeleteButton from "../utilities/deckDeleteButton";
 import DeckList from "./deckList";
 import Logger from "ts-logger-node";
-import VictoryTracker from "./VictoryTracker";
 
 const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -114,7 +113,6 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
             <DeckDeleteButton deckId={id} />
           </div>
         )}
-
         <p className="text-sm sm:text-base">
           <span className="font-bold">Deck ID:</span> {deck.id}
         </p>
@@ -143,7 +141,13 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
         </p>
         <h3 className="text-lg sm:text-xl font-bold mt-4">Cards:</h3>
 
-        <DeckList versions={versions} deck={deckByCardsByVersion} />
+        <DeckList
+          deckId={deck.id}
+          versions={versions}
+          deck={deckByCardsByVersion}
+          deckUserId={deck.user_id}
+          userId={user?.id || null}
+        />
       </div>
     );
   }
