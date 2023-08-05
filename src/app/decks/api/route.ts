@@ -1,9 +1,9 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { Database, Deck } from '@/types/supabase';
-import { GathererCard, GathererUrl } from '@/types/gatherer';
-import { mapCardsByQuantityToAdd } from '@/app/functions/cardFunctions';
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { Database, Deck } from "@/types/supabase";
+import { GathererCard, GathererUrl } from "@/types/gatherer";
+import { mapCardsByQuantityToAdd } from "@/app/functions/cardFunctions";
 
 export async function POST(request: Request) {
   try {
@@ -16,9 +16,9 @@ export async function POST(request: Request) {
 
     const user = session?.user;
     const { data: newDeck, error: newDeckError } = await supabase
-      .from('decks')
+      .from("decks")
       .insert({
-        comander_id: deck.commanderId,
+        commander_id: deck.commanderId,
         deck_format: deck.selectedFormat,
         name: deck.deckName,
         notes: deck.deckNotes,
@@ -33,16 +33,16 @@ export async function POST(request: Request) {
     if (newDeck[0]) {
       const { id } = newDeck[0];
       const { data: version, error: versionError } = await supabase
-        .from('deck_version')
+        .from("deck_version")
         .select()
-        .eq('deck_id', id);
+        .eq("deck_id", id);
 
       const colorArray = selectedColors.map((color: number) => {
         return { color_id: color, deck_id: id };
       });
 
       const { data: colorsData, error: colorsError } = await supabase
-        .from('decks_colors')
+        .from("decks_colors")
         .insert(colorArray);
       if (colorsError) throw colorsError;
       if (version !== null) {
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
         );
 
         const { data: cardsData, error: cardsError } = await supabase
-          .from('decks_cards')
+          .from("decks_cards")
           .insert(cardsToAdd);
         if (cardsError) throw cardsError;
       }

@@ -1,19 +1,19 @@
-import React from 'react';
-import DecksTable from '../components/decksTable';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Database } from '@/types/supabase';
-import { cookies } from 'next/headers';
-import Logger from 'ts-logger-node';
+import React from "react";
+import DecksTable from "../components/decksTable";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/types/supabase";
+import { cookies } from "next/headers";
+import Logger from "ts-logger-node";
 
 const DecksPage = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   let { data: decks, error: deckError } = await supabase
-    .from('decks')
+    .from("decks")
     .select(
       `
         user_id,
-              comander_id,
+              commander_id,
               deck_format,
               id,
               name,
@@ -25,7 +25,7 @@ const DecksPage = async () => {
     );
 
   if (deckError)
-    Logger.print(`${JSON.stringify(deckError)}`, 'ERROR');
+    Logger.print(`${JSON.stringify(deckError)}`, "ERROR");
 
   if (decks === null) return <DecksTable decks={[]} />;
 

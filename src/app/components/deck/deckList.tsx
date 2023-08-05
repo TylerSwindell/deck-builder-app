@@ -88,15 +88,18 @@ const DeckList: React.FC<DeckListProps> = ({
         setDeckVersion={setDeckVersion}
         defaultValue={deckVersion}
       />
-      {deckVersion && selectedVersion && (
-        <VictoryTracker
-          updateWinsAndLossesCallback={updateWinsAndLossesCallback}
-          wins={selectedVersion?.wins || 0}
-          losses={selectedVersion?.losses || 0}
-          versionId={deckVersion}
-          deckId={selectedVersion.deck_id || 0}
-        />
-      )}
+      {userId &&
+        userId === deckUserId &&
+        deckVersion &&
+        selectedVersion && (
+          <VictoryTracker
+            updateWinsAndLossesCallback={updateWinsAndLossesCallback}
+            wins={selectedVersion?.wins || 0}
+            losses={selectedVersion?.losses || 0}
+            versionId={deckVersion}
+            deckId={selectedVersion.deck_id || 0}
+          />
+        )}
       {deckVersion && (
         <ul className="list-disc ml-8">
           {deck[deckVersion].map((card) => (
