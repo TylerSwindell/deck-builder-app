@@ -1,7 +1,7 @@
-'use client';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import Signout from '../signout';
+"use client";
+import Link from "next/link";
+import React, { useState } from "react";
+import Signout from "../signout";
 
 const AppHeaderMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -14,22 +14,22 @@ const AppHeaderMenu = () => {
       <div className="hidden lg:block">
         <ul className="flex space-x-4">
           <li>
-            <Link className="jaceNeonText" href={'/decks/build'}>
+            <Link className="text-sky-400" href={"/decks/build"}>
               Build
             </Link>
           </li>
           <li>
-            <Link className="jaceNeonText" href={'/decks/analyze'}>
+            <Link className="text-sky-400" href={"/decks/analyze"}>
               Analyze
             </Link>
           </li>
           <li>
-            <Link className="jaceNeonText" href={'/decks'}>
+            <Link className="text-sky-400" href={"/decks"}>
               Decks
             </Link>
           </li>
           <li>
-            <Signout variant="neon" />
+            <Signout variant="blue" />
           </li>
         </ul>
       </div>
@@ -57,17 +57,17 @@ const AppHeaderMenu = () => {
         <div className="lg:hidden">
           <ul className="bg-white border rounded-md shadow-lg absolute right-0 mt-2  w-48 divide-y divide-blue-200">
             <li className="pl-2 pt-2 pb-2">
-              <Link className="jaceNeonText" href={'/decks/build'}>
+              <Link className="text-sky-400" href={"/decks/build"}>
                 Build
               </Link>
             </li>
             <li className="pl-2 pt-2 pb-2">
-              <Link className="jaceNeonText" href={'/decks/analyze'}>
+              <Link className="text-sky-400" href={"/decks/analyze"}>
                 Analyze
               </Link>
             </li>
             <li className="pl-2 pt-2 pb-2">
-              <Link className="jaceNeonText" href={'/decks'}>
+              <Link className="text-sky-400" href={"/decks"}>
                 Decks
               </Link>
             </li>
