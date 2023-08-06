@@ -76,11 +76,7 @@ const DeckList: React.FC<DeckListProps> = ({
     <div>
       {userId && userId !== deckUserId && deckVersion && (
         <div>
-          <DeckForkButton
-            deckId={deckId}
-            versionId={deckVersion}
-            userId={userId}
-          />
+          <DeckForkButton deckId={deckId} versionId={deckVersion} />
         </div>
       )}
       <DeckVersionFilter

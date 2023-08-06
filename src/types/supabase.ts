@@ -303,6 +303,14 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      fork_deck: {
+        Args: {
+          fork_deck_id: number;
+          fork_version_id: string;
+          fork_user_id: string;
+        };
+        Returns: number;
+      };
       compare_decks: {
         Args: {
           left_id: number;
