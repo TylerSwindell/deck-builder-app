@@ -21,7 +21,7 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     .select(
       `
       user_id,
-      comander_id,
+      commander_id,
       deck_format,
       id,
       notes,

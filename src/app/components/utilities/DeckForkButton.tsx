@@ -1,28 +1,33 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const DeckForkButton = ({
   deckId,
+  versionId,
 }: {
   deckId: number;
   versionId: string;
-  userId: string;
 }) => {
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const forkHandler = async () => {
     console.log("forked");
-    // const res = await fetch(
-    //   `${location.origin}/decks/api/${deckId}`,
-    //   {
-    //     method: "DELETE",
-    //   }
-    // );
-    // if (res.status === 204 || res.status === 200) {
-    //   router.push(`${location.origin}/dashboard`);
-    //   router.refresh();
-    // } else console.log(`error: ${JSON.stringify(res)}`);
+    setLoading(true);
+    const res = await fetch(`${location.origin}/decks/api/fork`, {
+      method: "POST",
+      body: JSON.stringify({
+        deckId,
+        versionId,
+      }),
+    });
+    if (res.status === 201 || res.status === 200) {
+      let data = await res.json();
+
+      console.log(`>>>${JSON.stringify(res)}`);
+      router.push(`/decks/${data}`);
+    } else console.log(`error: ${JSON.stringify(res)}`);
+    setLoading(false);
   };
 
   return (
@@ -32,6 +37,7 @@ const DeckForkButton = ({
         if (confirm("Are you sure you want to fork this deck?"))
           forkHandler();
       }}
+      disabled={loading}
     >
       Fork
     </button>

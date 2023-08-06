@@ -14,22 +14,22 @@ const AppHeaderMenu = () => {
       <div className="hidden lg:block">
         <ul className="flex space-x-4">
           <li>
-            <Link className="text-sky-400" href={"/decks/build"}>
+            <Link className="jaceNeonText" href={"/decks/build"}>
               Build
             </Link>
           </li>
           <li>
-            <Link className="text-sky-400" href={"/decks/analyze"}>
+            <Link className="jaceNeonText" href={"/decks/analyze"}>
               Analyze
             </Link>
           </li>
           <li>
-            <Link className="text-sky-400" href={"/decks"}>
+            <Link className="jaceNeonText" href={"/decks"}>
               Decks
             </Link>
           </li>
           <li>
-            <Signout variant="blue" />
+            <Signout variant="neon" />
           </li>
         </ul>
       </div>
