@@ -127,6 +127,7 @@ export interface Database {
         Row: {
           commander_id: string | null;
           deck_format: number;
+          fork_id: number | null;
           id: number;
           name: string | null;
           notes: string | null;
@@ -137,6 +138,7 @@ export interface Database {
         Insert: {
           commander_id?: string | null;
           deck_format: number;
+          fork_id?: number | null;
           id?: number;
           name?: string | null;
           notes?: string | null;
@@ -147,6 +149,7 @@ export interface Database {
         Update: {
           commander_id?: string | null;
           deck_format?: number;
+          fork_id?: number | null;
           id?: number;
           name?: string | null;
           notes?: string | null;
