@@ -4,7 +4,9 @@ import { cookies } from "next/headers";
 import { getCardsInDeck } from "../../functions/cardFunctions";
 import { GathererCard } from "@/types/gatherer";
 import Link from "next/link";
-import DeckDeleteButton from "../deckDeleteButton";
+
+import DeckDeleteButton from "../utilities/deckDeleteButton";
+
 import DeckList from "./deckList";
 import Logger from "ts-logger-node";
 
@@ -21,9 +23,10 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     .select(
       `
       user_id,
-      comander_id,
+      commander_id,
       deck_format,
       id,
+      notes,
       name,
       oathbreaker_id,
       signature_spell_id             
@@ -32,7 +35,10 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
     .eq("id", id)
     .single();
 
-  const { data: cards, error } = await supabase.from("decks_cards").select("*");
+
+  const { data: cards, error } = await supabase
+    .from("decks_cards")
+    .select("*");
 
   const { data: versions, error: versionsError } = await supabase
     .from("deck_version")
@@ -112,7 +118,8 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
           <span className="font-bold">Deck ID:</span> {deck.id}
         </p>
         <p className="text-sm sm:text-base">
-          <span className="font-bold">Format:</span> {format.format_name}
+          <span className="font-bold">Format:</span>{" "}
+          {format.format_name}
         </p>
         <p className="text-sm sm:text-base">
           <span className="font-bold">Has Commander:</span>{" "}
@@ -132,12 +139,16 @@ const DeckComponent: React.FC<{ id: number }> = async ({ id }) => {
         <p className="text-sm sm:text-base">
           <span className="font-bold">Allow Rares:</span>{" "}
           {format.allow_rares ? "Yes" : "No"}
+
         </p>
         <h3 className="text-lg sm:text-xl font-bold mt-4">Cards:</h3>
 
         <DeckList
+          deckId={deck.id}
           versions={versions}
           deck={deckByCardsByVersion}
+          deckUserId={deck.user_id}
+          userId={user?.id || null}
         />
       </div>
     );

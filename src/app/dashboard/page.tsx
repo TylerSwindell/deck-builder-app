@@ -5,6 +5,8 @@ import Link from 'next/link';
 import ErrorDisplay from '../components/errors/errorDisplay';
 import NoDecksFallback from '../components/noDecksFallback';
 import { Database, Deck } from '@/types/supabase';
+import BlackContainer from '../components/utilities/BlackContainer';
+import Tooltip from '../components/utilities/Tooltip';
 
 const Dashboard = async () => {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -40,17 +42,18 @@ const Dashboard = async () => {
         ) : (
           <div className="grid grid-cols-3 gap-4">
             {decks.map((deck: Deck) => (
-              <div className="p-4 border rounded-md">
-                <h2 className="text-lg text-white font-bold mb-2">
-                  {deck.name || 'Untitled Deck'}
-                </h2>
-                <Link
-                  className="text-blue-500 hover:underline"
-                  href={`/decks/${deck.id}`}
-                >
-                  View More
-                </Link>
-              </div>
+              <BlackContainer key={deck.id}>
+                <div className="text-center">
+                  <Tooltip text={`${deck.notes}`}>
+                    <Link
+                      className="text-lg text-white font-bold mb-2  hover:underline"
+                      href={`/decks/${deck.id}`}
+                    >
+                      {deck.name || 'Untitled Deck'}{' '}
+                    </Link>
+                  </Tooltip>
+                </div>
+              </BlackContainer>
             ))}
           </div>
         )}

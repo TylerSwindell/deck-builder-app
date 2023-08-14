@@ -19,7 +19,13 @@ const DeckDeleteButton = ({ deckId }: { deckId: number }) => {
   };
 
   return (
-    <button type="submit" onClick={deleteHandler}>
+    <button
+      type="submit"
+      onClick={() => {
+        if (confirm('Are you sure you want to delete this deck?'))
+          deleteHandler();
+      }}
+    >
       Delete
     </button>
   );

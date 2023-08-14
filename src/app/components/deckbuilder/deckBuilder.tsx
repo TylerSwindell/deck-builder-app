@@ -8,6 +8,7 @@ import CardList from './cardList';
 import CardTooltip from '../cardTooltip';
 import { TooltipWrapper } from './components';
 import { useRouter } from 'next/navigation';
+import BlackContainer from '../utilities/BlackContainer';
 
 type DeckBuilderProps = {
   formats: Format[];
@@ -165,7 +166,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
   ));
 
   return (
-    <div className="bg-black border border-gray-400 rounded-lg p-4 shadow-sm">
+    <BlackContainer>
       <div className="p-4">
         <div className="mb-4">
           <label
@@ -351,7 +352,7 @@ const DeckBuilder: React.FC<DeckBuilderProps> = ({
           </button>
         </div>
       </div>
-    </div>
+    </BlackContainer>
   );
 };
 

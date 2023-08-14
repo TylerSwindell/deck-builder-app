@@ -16,7 +16,7 @@ export type DeckWithColors = Deck & {
 };
 
 export type Deck = {
-  comander_id: string | null;
+  commander_id: string | null;
   deck_format: number;
   id: number;
   name: string | null;
@@ -116,17 +116,18 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: 'deck_version_deck_id_fkey';
-            columns: ['deck_id'];
-            referencedRelation: 'decks';
-            referencedColumns: ['id'];
+            foreignKeyName: "deck_version_deck_id_fkey";
+            columns: ["deck_id"];
+            referencedRelation: "decks";
+            referencedColumns: ["id"];
           }
         ];
       };
       decks: {
         Row: {
-          comander_id: string | null;
+          commander_id: string | null;
           deck_format: number;
+          fork_id: number | null;
           id: number;
           name: string | null;
           notes: string | null;
@@ -135,8 +136,9 @@ export interface Database {
           user_id: string | null;
         };
         Insert: {
-          comander_id?: string | null;
+          commander_id?: string | null;
           deck_format: number;
+          fork_id?: number | null;
           id?: number;
           name?: string | null;
           notes?: string | null;
@@ -145,8 +147,9 @@ export interface Database {
           user_id?: string | null;
         };
         Update: {
-          comander_id?: string | null;
+          commander_id?: string | null;
           deck_format?: number;
+          fork_id?: number | null;
           id?: number;
           name?: string | null;
           notes?: string | null;
@@ -156,16 +159,16 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: 'decks_deck_format_fkey';
-            columns: ['deck_format'];
-            referencedRelation: 'decks_formats';
-            referencedColumns: ['id'];
+            foreignKeyName: "decks_deck_format_fkey";
+            columns: ["deck_format"];
+            referencedRelation: "decks_formats";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: 'decks_user_id_fkey';
-            columns: ['user_id'];
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
+            foreignKeyName: "decks_user_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -196,16 +199,16 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: 'decks_cards_deck_id_fkey';
-            columns: ['deck_id'];
-            referencedRelation: 'decks';
-            referencedColumns: ['id'];
+            foreignKeyName: "decks_cards_deck_id_fkey";
+            columns: ["deck_id"];
+            referencedRelation: "decks";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: 'decks_cards_version_id_fkey';
-            columns: ['version_id'];
-            referencedRelation: 'deck_version';
-            referencedColumns: ['id'];
+            foreignKeyName: "decks_cards_version_id_fkey";
+            columns: ["version_id"];
+            referencedRelation: "deck_version";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -227,16 +230,16 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: 'decks_colors_color_id_fkey';
-            columns: ['color_id'];
-            referencedRelation: 'colors';
-            referencedColumns: ['id'];
+            foreignKeyName: "decks_colors_color_id_fkey";
+            columns: ["color_id"];
+            referencedRelation: "colors";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: 'decks_colors_deck_id_fkey';
-            columns: ['deck_id'];
-            referencedRelation: 'decks';
-            referencedColumns: ['id'];
+            foreignKeyName: "decks_colors_deck_id_fkey";
+            columns: ["deck_id"];
+            referencedRelation: "decks";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -291,10 +294,10 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: 'profiles_id_fkey';
-            columns: ['id'];
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
+            foreignKeyName: "profiles_id_fkey";
+            columns: ["id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -303,6 +306,14 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
+      fork_deck: {
+        Args: {
+          fork_deck_id: number;
+          fork_version_id: string;
+          fork_user_id: string;
+        };
+        Returns: number;
+      };
       compare_decks: {
         Args: {
           left_id: number;

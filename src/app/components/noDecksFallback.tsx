@@ -8,8 +8,8 @@ const NoDecksFallback: React.FC = () => {
         No Decks Found
       </h2>
       <p className="text-white text-center">
-        It seems like you don't have any decks yet. Start building
-        your own Magic: The Gathering decks now!
+        It seems like you don&apos;t have any decks yet. Start
+        building your own Magic: The Gathering decks now!
       </p>
       <button className="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
         <Link href="/decks">Create New Deck </Link>
